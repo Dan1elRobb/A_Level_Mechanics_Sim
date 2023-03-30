@@ -16,9 +16,3 @@ def N_L_Two_No_Mass(resultant_force,acceleration,):
     return f'{mass}kg'
 
 
-a = N_L_Two_No_Force(4, 5, 'right')
-b = N_L_Two_No_Acc(4, 20, 'right')
-c = N_L_Two_No_Mass(5, 20)
-print(a)
-print(b)
-print(c)
