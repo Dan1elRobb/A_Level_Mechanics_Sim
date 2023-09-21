@@ -31,7 +31,7 @@ while True:
 
     # move the ball
     ball_obj = ball_obj.move(speed)
-    print(f'Speed is {speed}')
+    print(f'Velocity is {speed}')
 
     # flip vels if ball contacts edge of window and sims accel
     if ball_obj.left <= 0 or ball_obj.right >= width:
