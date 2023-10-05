@@ -4,11 +4,16 @@ import pygame as pg
 import math
 # Initialise pygame
 pg.init()
-# Define window size as a constant and at create the pygame window
-WINDOW_SIZE = (1280, 720)
-window = pg.display.set_mode(WINDOW_SIZE)
 ANGLE = 30
-print(math.radians(ANGLE))
+# Define window size as a constant and at create the pygame window
+WINDOW_WIDTH = 1280
+WINDOW_HEIGHT = 720
+if ANGLE > 30:
+    WINDOW_WIDTH = 900
+    WINDOW_HEIGHT = 1200
+WINDOW_SIZE = (WINDOW_WIDTH,WINDOW_HEIGHT)
+window = pg.display.set_mode(WINDOW_SIZE)
+
 
 # Define colours
 BLACK = (255, 255, 255)
@@ -17,18 +22,18 @@ draw_options = pymunk.pygame_util.DrawOptions(window)
 
 # Create the pymunk space and assign it a gravity vector
 space = pymunk.Space()
-space.gravity = 0, 100
+space.gravity = 0, 9.81
 
 # Create slope
 SLOPE_Y_POS_BECAUSE_OF_ANGLE = 1280 * math.tan(math.radians((ANGLE)))
 slope_static = space.static_body
-slope_segment = pymunk.Segment(slope_static, (0, 720), (1280, SLOPE_Y_POS_BECAUSE_OF_ANGLE), 4)
+slope_segment = pymunk.Segment(slope_static, (0, WINDOW_HEIGHT), (WINDOW_WIDTH, WINDOW_HEIGHT - SLOPE_Y_POS_BECAUSE_OF_ANGLE), 4)
 slope_segment.elasticity = 1
-
+slope_segment.friction = 5
 
 # Create Block
-block_body = pymunk.Body(mass=5, moment=10)
-block_body.position = 1000, 20
+block_body = pymunk.Body(mass=2, moment=10)
+block_body.position = 1270, 720 - SLOPE_Y_POS_BECAUSE_OF_ANGLE - 10
 block = pymunk.Poly.create_box(block_body, (50, 50))
 
 
