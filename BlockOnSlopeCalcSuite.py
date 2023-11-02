@@ -30,7 +30,17 @@ def calc_m_with_acc(angle, a, f):
     m = f / ((G * math.sin(math.radians(angle))) - a)
     return m
 
-
+def calc_v_over_time(angle,mew,end_time):
+    t = 0
+    time_list = []
+    vel_list = []
+    while t < end_time:
+        for i in range(end_time*100):
+            v = 9.8*t(math.sin(angle) - math.cos(angle)*mew)
+            vel_list.append(v)
+            time_list.append(t)
+            t += 0.01
+    return vel_list,time_list
 '''m = int(input('Mass: '))
 angle = int(input('Angle: '))
 f = int(input('Friction: '))
