@@ -4,7 +4,7 @@ import pygame as pg
 import math
 # Initialise pygame
 pg.init()
-ANGLE = 60
+ANGLE = 30
 # Define window size as a constant and at create the pygame window
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720

@@ -1,6 +1,6 @@
 import math
 import matplotlib.pyplot as plt
-
+import numpy as np
 def calc_v_over_time(angle,mew,end_time):
     t = 0
     time_list = []
@@ -13,8 +13,13 @@ def calc_v_over_time(angle,mew,end_time):
             t += 0.01
     return time_list,vel_list
 
-print(calc_v_over_time(30,0.5,10))
+print(max(calc_v_over_time(60,0.5,10)[1]))
 
-fig = plt.figure()
+fig = plt.figure(figsize=(20,30))
 ax = plt.axes()
-ax.plot(calc_v_over_time(30,0.5,10)[0],calc_v_over_time(30,0.5,10)[1])
+ax.plot(calc_v_over_time(60,0.5,10)[0],calc_v_over_time(60,0.5,10)[1])
+plt.xticks(np.arange(0,max(calc_v_over_time(60,0.5,10)[0])+0.5,0.5))
+plt.yticks(np.arange(0,max(calc_v_over_time(60,0.5,10)[1])+0.5,0.5))
+plt.xlim(0,10)
+plt.ylim(0,max(calc_v_over_time(60,0.5,10)[1]))
+plt.show()

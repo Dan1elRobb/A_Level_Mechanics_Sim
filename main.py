@@ -1,18 +1,9 @@
-import pymunk
+import math
+import matplotlib.pyplot as plt
+import numpy as np
 
-
-def N_L_Two_No_Force(mass, acceleration, direction):
-    resultant_force = mass * acceleration
-    return f'{resultant_force}N in the {direction} direction'
-
-
-def N_L_Two_No_Acc( resultant_force, mass, direction):
-    acc = resultant_force / mass
-    return f'{acc}m/s^2 in the {direction} direction'
-
-
-def N_L_Two_No_Mass(resultant_force,acceleration,):
-    mass = resultant_force / acceleration
-    return f'{mass}kg'
-
-
+fig, ax = plt.subplots()
+x = np.arange(0,5*np.pi,0.1)
+y = np.sin(x)
+ax.plot(x,y)
+ax.plot(x+np.pi/2,y,color="red")
