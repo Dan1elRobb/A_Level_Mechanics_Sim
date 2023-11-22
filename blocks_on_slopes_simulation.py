@@ -27,7 +27,7 @@ slope_static = space.static_body
 slope_segment = pymunk.Segment(slope_static, (0, WINDOW_HEIGHT), (WINDOW_WIDTH, WINDOW_HEIGHT - SLOPE_Y_POS_BECAUSE_OF_ANGLE), 4)
 slope_segment.elasticity = 1
 slope_segment.friction = 5
-
+'''
 # Create Block
 block_body = pymunk.Body(mass=2, moment=10)
 block_body.position = 1270, 720 - SLOPE_Y_POS_BECAUSE_OF_ANGLE - 10
@@ -36,7 +36,7 @@ block = pymunk.Poly.create_box(block_body, (50, 50))
 
 # Add Block to space
 space.add(block_body, block, slope_segment)
-
+'''
 
 # Pygame event loop
 
@@ -48,6 +48,10 @@ class Sim:
         self.running = True
 
     def run(self):
+        block_body = pymunk.Body(mass=2, moment=10)
+        block_body.position = 1270, 720 - SLOPE_Y_POS_BECAUSE_OF_ANGLE - 10
+        block = pymunk.Poly.create_box(block_body, (50, 50))
+        space.add(block_body, block, slope_segment)
         while self.running:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -57,8 +61,9 @@ class Sim:
             space.debug_draw(self.draw_options)
             pg.display.update()
             space.step(0.01)
-
+        space.remove(block_body, block, slope_segment)
         pg.quit()
+
 
 
 Sim().run()
