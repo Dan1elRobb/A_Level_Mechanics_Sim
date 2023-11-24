@@ -21,6 +21,10 @@ class App(tk.Tk):
         self.button['command'] = self.rerun_button_clicked
         self.button.pack()
 
+        self.button = ttk.Button(self, text='Quit')
+        self.button['command'] = self.leave_app()
+        self.button.pack()
+
     def rerun_button_clicked(self):
         Sim().run()
 
@@ -30,6 +34,9 @@ class App(tk.Tk):
         graph_page = VelocityTimeGraphFrame()
         graph_page.pack()
         root.mainloop()
+
+    def leave_app(self):
+        self.destroy()
 
 
 if __name__ == "__main__":
