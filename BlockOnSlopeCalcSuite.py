@@ -36,13 +36,15 @@ def calc_v_over_time(angle, mew, end_time):
     time_list = []
     vel_list = []
     while t < end_time:
-        v = 9.8 * t*(math.sin(angle) - math.cos(angle) * mew)
+        v = 9.8 * t * (math.sin(angle) - math.cos(angle) * mew)
         vel_list.append(v)
         time_list.append(t)
         t += 0.01
     return vel_list, time_list
 
+
 print(calc_v_over_time(60, 0.5, 10))
+
 '''m = int(input('Mass: '))
 angle = int(input('Angle: '))
 f = int(input('Friction: '))

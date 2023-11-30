@@ -12,4 +12,9 @@ f = int(var_values[2])
 mew = float(var_values[3])
 a = int(var_values[4])
 
-print(mew)
+values_dict = {'mass':m,
+               'angle':angle,
+               'friction':f,
+               'mew':mew,
+               'acceleration': a
+}
