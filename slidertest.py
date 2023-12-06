@@ -1,59 +1,33 @@
-import pygame as py
+# Import the required libraries
+from tkinter import *
+from tkinter import ttk
 
-# define constants
-WIDTH = 500
-HEIGHT = 500
-FPS = 30
+# Create an instance of tkinter frame or window
+win=Tk()
+# Set the size of the window
+win.geometry("700x350")
 
-# define colors
-BLACK = (0 , 0 , 0)
-GREEN = (0 , 255 , 0)
+def add_label():
+   global label
+   label=Label(win, text="1. A Newly created Label", font=('Aerial 18'))
+   label.pack()
 
-# initialize pygame and create screen
-py.init()
-screen = py.display.set_mode((WIDTH , HEIGHT))
-# for setting FPS
-clock = py.time.Clock()
+def remove_label():
+   global label
+   label.pack_forget()
 
-rot = 0
-rot_speed = 2
+def update_label():
+   global label
+   label["text"]="2. Yay!! I am updated"
 
-# define a surface (RECTANGLE)
-image_orig = py.Surface((100 , 100))
-# for making transparent background while rotating an image
-image_orig.set_colorkey(BLACK)
-# fill the rectangle / surface with green color
-image_orig.fill(GREEN)
-# creating a copy of orignal image for smooth rotation
-image = image_orig.copy()
-image.set_colorkey(BLACK)
-# define rect for placing the rectangle at the desired position
-rect = image.get_rect()
-rect.center = (WIDTH // 2 , HEIGHT // 2)
-# keep rotating the rectangle until running is set to False
-running = True
-while running:
-    # set FPS
-    clock.tick(FPS)
-    # clear the screen every time before drawing new objects
-    screen.fill(BLACK)
-    # check for the exit
-    for event in py.event.get():
-        if event.type == py.QUIT:
-            running = False
+# Create buttons for add/remove/update the label widget
+add=ttk.Button(win, text="Add a new Label", command=add_label)
+add.pack(anchor=W, pady=10)
 
-    # making a copy of the old center of the rectangle
-    old_center = rect.center
-    # defining angle of the rotation
-    rot = (rot + rot_speed) % 360
-    # rotating the orignal image
-    new_image = py.transform.rotate(image_orig , rot)
-    rect = new_image.get_rect()
-    # set the rotated rectangle to the old center
-    rect.center = old_center
-    # drawing the rotated rectangle to the screen
-    screen.blit(new_image , rect)
-    # flipping the display after drawing everything
-    py.display.flip()
+remove=ttk.Button(win, text="Remove the Label", command=remove_label)
+remove.pack(anchor=W, pady=10)
 
-py.quit()
+update=ttk.Button(win, text="Update the Label", command=update_label)
+update.pack(anchor=W, pady=10)
+
+win.mainloop()
