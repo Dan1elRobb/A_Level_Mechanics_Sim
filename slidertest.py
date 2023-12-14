@@ -1,33 +1,23 @@
-# Import the required libraries
-from tkinter import *
-from tkinter import ttk
+import time
+import tkinter as tk
 
-# Create an instance of tkinter frame or window
-win=Tk()
-# Set the size of the window
-win.geometry("700x350")
+tk = tk.Tk()
 
-def add_label():
-   global label
-   label=Label(win, text="1. A Newly created Label", font=('Aerial 18'))
-   label.pack()
+###
 
-def remove_label():
-   global label
-   label.pack_forget()
+def everysecond():
+    print("One second has passed.")
+    # Put here the code to reduce the tkinter counter by one.
+    # For example, modify the label.
 
-def update_label():
-   global label
-   label["text"]="2. Yay!! I am updated"
+###
 
-# Create buttons for add/remove/update the label widget
-add=ttk.Button(win, text="Add a new Label", command=add_label)
-add.pack(anchor=W, pady=10)
+secs = int(time.time())
 
-remove=ttk.Button(win, text="Remove the Label", command=remove_label)
-remove.pack(anchor=W, pady=10)
+while True:
+    tk.update()
+    tk.update_idletasks()
 
-update=ttk.Button(win, text="Update the Label", command=update_label)
-update.pack(anchor=W, pady=10)
-
-win.mainloop()
+    if int(time.time()) > secs:
+        secs = int(time.time())
+        everysecond()

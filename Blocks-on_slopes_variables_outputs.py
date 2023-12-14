@@ -11,9 +11,15 @@ class Outputs_GUI(tk.Tk):
         self.geometry('1280x720')
         self.label = ttk.Label(self, text=f'Mass: {self.m}')
         self.label.pack()
+    def m_minus_one(self):
+        self.m -= 1
+
 
 
 if __name__ == "__main__":
-    gui = Outputs_GUI(10)
-    gui.change_m()
-    gui.mainloop()
+    gui = Outputs_GUI(10,2,30,4)
+    while True:
+        gui.m_minus_one()
+        Outputs_GUI.update(gui)
+        Outputs_GUI.update_idletasks(gui)
+
