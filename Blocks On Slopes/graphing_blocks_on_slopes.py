@@ -1,6 +1,8 @@
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import tkinter as tk
+matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from BlockOnSlopeCalcSuite import calc_v_over_time
 
