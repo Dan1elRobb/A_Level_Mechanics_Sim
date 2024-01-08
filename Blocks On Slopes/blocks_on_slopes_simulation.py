@@ -3,44 +3,41 @@ import pymunk.pygame_util
 import pygame as pg
 import math
 
+with open('vars.txt', "r") as file:
+    # Read each line and assign values to variables
+    mass = int(file.readline().strip())
+    angle = int(file.readline().strip())
+    friction = int(file.readline().strip())
+    mew = int(file.readline().strip())
+    end_time = int(file.readline().strip())
+    acc = int(file.readline().strip())
 # Initialise pygame
 pg.init()
-ANGLE = 60
-# Define window size as a constant and at create the pygame window
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
-WINDOW_SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT)
-window = pg.display.set_mode(WINDOW_SIZE)
+ANGLE = angle
+
+# Calculate the width based on the angle for a more appropriate window size
+SLOPE_WIDTH = 1280  # Set the initial window width
+SLOPE_HEIGHT = SLOPE_WIDTH * math.tan(math.radians(ANGLE))  # Calculate the slope height
+MAX_WINDOW_HEIGHT = 1000  # Set a maximum window height
+WINDOW_HEIGHT = min(int(SLOPE_HEIGHT) + 100, MAX_WINDOW_HEIGHT)  # Adjusted window height
+WINDOW_SIZE = (SLOPE_WIDTH, WINDOW_HEIGHT)  # Adjusted window size
 
 # Define colours
 BLACK = (255, 255, 255)
+
 # Allow Pymunk to draw to the pygame window
-draw_options = pymunk.pygame_util.DrawOptions(window)
+draw_options = pymunk.pygame_util.DrawOptions(pg.display.set_mode(WINDOW_SIZE))
 
 # Create the pymunk space and assign it a gravity vector
 space = pymunk.Space()
 space.gravity = 0, 9.81
 
 # Create slope
-SLOPE_Y_POS_BECAUSE_OF_ANGLE = 1280 * math.tan(math.radians((ANGLE)))
 slope_static = space.static_body
 slope_segment = pymunk.Segment(slope_static, (0, WINDOW_HEIGHT),
-                               (WINDOW_WIDTH, WINDOW_HEIGHT - SLOPE_Y_POS_BECAUSE_OF_ANGLE), 4)
+                               (SLOPE_WIDTH, WINDOW_HEIGHT - SLOPE_HEIGHT), 4)
 slope_segment.elasticity = 1
-slope_segment.friction = 10
-'''
-# Create Block
-block_body = pymunk.Body(mass=2, moment=10)
-block_body.position = 1270, 720 - SLOPE_Y_POS_BECAUSE_OF_ANGLE - 10
-block = pymunk.Poly.create_box(block_body, (50, 50))
-
-
-# Add Block to space
-space.add(block_body, block, slope_segment)
-'''
-
-
-# Pygame event loop
+slope_segment.friction = 100
 
 class Sim:
     def __init__(self):
@@ -48,23 +45,35 @@ class Sim:
         self.screen = pg.display.set_mode(WINDOW_SIZE)
         self.draw_options = pymunk.pygame_util.DrawOptions(self.screen)
         self.running = True
+        self.paused = False
+
+        # Moved the block creation outside the while loop to avoid creating a new block every frame
+        self.block_body = pymunk.Body(mass=2, moment=10)
+        self.block_body.position = SLOPE_WIDTH - 10, WINDOW_HEIGHT - SLOPE_HEIGHT
+        self.block = pymunk.Poly.create_box(self.block_body, (50, 50))
+        space.add(self.block_body, self.block, slope_segment)
 
     def run(self):
-        block_body = pymunk.Body(mass=2, moment=10)
-        block_body.position = 1270, 720 - SLOPE_Y_POS_BECAUSE_OF_ANGLE - 10
-        block = pymunk.Poly.create_box(block_body, (50, 50))
-        space.add(block_body, block, slope_segment)
         while self.running:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     self.running = False
+                elif event.type == pg.KEYDOWN:
+                    if event.key == pg.K_ESCAPE:
+                        self.running = False
+                    elif event.key == pg.K_SPACE:
+                        self.paused = not self.paused
+
+            if not self.paused:
+                # If not paused, progress the simulation
+                space.step(0.01)
 
             self.screen.fill((220, 220, 220))
             space.debug_draw(self.draw_options)
-            pg.display.update()
-            space.step(0.01)
-        space.remove(block_body, block, slope_segment)
-        pg.quit()
 
+            pg.display.update()
+
+        # Removed space.remove as it's not necessary, the space will be cleared when the program exits
+        pg.quit()
 
 Sim().run()

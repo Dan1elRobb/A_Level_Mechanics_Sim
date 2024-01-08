@@ -2,7 +2,7 @@ import tkinter as tk
 import math
 
 
-class Variable_Outputs_GUI:
+class Blocks_on_slopes_Variable_Outputs_GUI:
     def __init__(self, root, vel_list, time_list):
         self.root = root
         self.root.title("Blocks On Slopes Variable Outputs")
@@ -50,11 +50,20 @@ def calc_v_over_time(angle, mew, end_time):
         t += 0.01
     return vel_list, time_list
 
+with open('vars.txt', "r") as file:
+    # Read each line and assign values to variables
+    mass = int(file.readline().strip())
+    angle = int(file.readline().strip())
+    friction = int(file.readline().strip())
+    mew = int(file.readline().strip())
+    end_time = int(file.readline().strip())
+    acc = int(file.readline().strip())
 
-vel_list = calc_v_over_time(math.pi / 6, 0.5, 10)[0]
-time_list = calc_v_over_time(math.pi / 6, 0.5, 10)[1]
+
+vel_list = calc_v_over_time(math.radians(angle), mew, end_time)[0]
+time_list = calc_v_over_time(math.radians(angle), mew, end_time)[1]
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = Variable_Outputs_GUI(root, vel_list, time_list)
+    app = Blocks_on_slopes_Variable_Outputs_GUI(root, vel_list, time_list)
     root.mainloop()
