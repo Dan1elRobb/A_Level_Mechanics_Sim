@@ -1,7 +1,6 @@
 import pymunk
 import pymunk.pygame_util
 import pygame as pg
-import math
 
 # Initialize Pygame
 pg.init()
@@ -33,7 +32,7 @@ class Particle:
 # Collision handler for detecting collisions with the wall
 def wall_collision_handler(arbiter, space, data):
     # Set a specific coefficient of restitution for the collision with the wall
-    arbiter.elasticity = 0.8  # Adjust this value as needed
+    arbiter.contacts[0].restitution = 0.8  # Adjust this value as needed
 
     # Get the velocity before the collision
     v_before = arbiter.shapes[0].body.velocity
@@ -68,6 +67,9 @@ while running:
 
     # Update the simulation
     space.step(dt)
+
+    # Print the velocity of the particle
+    print("Particle Velocity:", particle.body.velocity)
 
     # Draw the simulation
     screen.fill((255, 255, 255))
