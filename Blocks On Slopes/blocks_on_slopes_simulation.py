@@ -3,7 +3,7 @@ import pymunk.pygame_util
 import pygame as pg
 import math
 
-with open('vars.txt', "r") as file:
+with open('BOSVars.txt', "r") as file:
     # Read each line and assign values to variables
     mass = int(file.readline().strip())
     angle = int(file.readline().strip())
