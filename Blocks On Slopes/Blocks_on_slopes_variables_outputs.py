@@ -50,7 +50,7 @@ def calc_v_over_time(angle, mew, end_time):
         t += 0.01
     return vel_list, time_list
 
-with open('vars.txt', "r") as file:
+with open('BOSVars.txt', "r") as file:
     # Read each line and assign values to variables
     mass = int(file.readline().strip())
     angle = int(file.readline().strip())
