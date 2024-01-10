@@ -52,8 +52,8 @@ def particle_collision_handler(arbiter, space, data):
     return True
 
 # Create particles with variable masses and initial velocities
-particle1 = Particle(mass=2, radius=20, position=(200, 300), velocity=(20, 0), color=(255, 0, 0))
-particle2 = Particle(mass=2.0, radius=15, position=(600, 300), velocity=(-80, 0), color=(0, 0, 255))
+particle1 = Particle(mass=3, radius=20, position=(200, 300), velocity=(47, 0), color=(255, 0, 0))
+particle2 = Particle(mass=6, radius=15, position=(600, 300), velocity=(-800, 0), color=(0, 0, 255))
 
 # Add collision handler for particles
 handler = space.add_collision_handler(0, 0)  # Collides with itself

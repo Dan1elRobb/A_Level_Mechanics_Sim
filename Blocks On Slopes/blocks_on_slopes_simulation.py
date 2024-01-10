@@ -37,7 +37,7 @@ slope_static = space.static_body
 slope_segment = pymunk.Segment(slope_static, (0, WINDOW_HEIGHT),
                                (SLOPE_WIDTH, WINDOW_HEIGHT - SLOPE_HEIGHT), 4)
 slope_segment.elasticity = 1
-slope_segment.friction = 100
+slope_segment.friction = 0.01
 
 class Sim:
     def __init__(self):
@@ -51,6 +51,7 @@ class Sim:
         self.block_body = pymunk.Body(mass=2, moment=10)
         self.block_body.position = SLOPE_WIDTH - 10, WINDOW_HEIGHT - SLOPE_HEIGHT
         self.block = pymunk.Poly.create_box(self.block_body, (50, 50))
+        self.block.friction = 0.5
         space.add(self.block_body, self.block, slope_segment)
 
     def run(self):
