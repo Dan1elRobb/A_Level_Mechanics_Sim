@@ -20,5 +20,5 @@ def calc_variables_over_time(angle, end_time, initial_vel, initial_height):
 
 
 print(calc_variables_over_time(30, 15, 15, 0)[0])
-print(calc_variables_over_time(30, 15, 15, 0)[1])
+print(calc_variables_over_time(30, 15, 15, 0)[3])
 

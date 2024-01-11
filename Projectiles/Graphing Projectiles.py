@@ -26,17 +26,42 @@ def calc_variables_over_time(angle, end_time, initial_vel, initial_height):
     return time_list, y_dis_list, x_dis_list, y_vel_list
 
 
+def find_index_of_second_zero_displacement(dis_list):
+    a = [i for i, n in enumerate(dis_list) if n < 3]
+    return a[1]
+
+
+with open('PVars.txt', "r") as file:
+    # Read each line and assign values to variables
+    angle = int(file.readline().strip())
+    mass = int(file.readline().strip())
+    initial_vel = int(file.readline().strip())
+    starting_height = int(file.readline().strip())
+    end_time = int(file.readline().strip())
+
+list_of_variables = calc_variables_over_time(angle, end_time, initial_vel, starting_height)
+
+
 class YDisplacementTimeGraphFrame(tk.Frame):
     def __init__(self):
         super().__init__()
-        fig = plt.figure(figsize=(20, 50))
+        fig = plt.figure(figsize=(20, 60))
         ax = plt.axes()
-        ax.plot(calc_variables_over_time(30, 15, 15, 0)[0], calc_variables_over_time(30, 15, 15, 0)[1])
-        plt.xticks(np.arange(0, max(calc_variables_over_time(30, 15, 15, 0)[0]) + 0.5, 0.5))
-        plt.yticks(np.arange(0, max(calc_variables_over_time(30, 15, 15, 0)[1]) + 10, 10))
-        plt.xlim(0, max(calc_variables_over_time(30, 15, 15, 0)[0]))
-        plt.ylim(0, max(calc_variables_over_time(30, 15, 15, 0)[1]))
-
+        ax.plot(list_of_variables[0][
+                0:find_index_of_second_zero_displacement(list_of_variables[1])+10],
+                list_of_variables[1][
+                0:find_index_of_second_zero_displacement(list_of_variables[1])+10])
+        plt.xticks(np.arange(0, max(list_of_variables[0][0:find_index_of_second_zero_displacement(
+            list_of_variables[1])]) + 0.5, 0.5))
+        plt.yticks(np.arange(0, max(list_of_variables[1][0:find_index_of_second_zero_displacement(
+            list_of_variables[1])]) + 0.5, 0.5))
+        plt.xlim(0, max(list_of_variables[0][
+                        0:find_index_of_second_zero_displacement(list_of_variables[1])+10]))
+        plt.ylim(0, max(list_of_variables[1][
+                        0:find_index_of_second_zero_displacement(list_of_variables[1])+10]))
+        plt.grid()
+        ax.axhline()
+        ax.axvline()
         canvas = FigureCanvasTkAgg(fig, master=self)
         canvas.draw()
 
@@ -48,12 +73,16 @@ class YVelocityTimeGraphFrame(tk.Frame):
         super().__init__()
         fig = plt.figure(figsize=(20, 50))
         ax = plt.axes()
-        ax.plot(calc_variables_over_time(30, 15, 15, 0)[0], calc_variables_over_time(30, 15, 15, 0)[3])
-        plt.xticks(np.arange(0, max(calc_variables_over_time(30, 15, 15, 0)[0]) + 0.5, 0.5))
-        plt.yticks(np.arange(0, max(calc_variables_over_time(30, 15, 15, 0)[3]) + 10, 10))
-        plt.xlim(0, max(calc_variables_over_time(30, 15, 15, 0)[0]))
-        plt.ylim(0, max(calc_variables_over_time(30, 15, 15, 0)[3]))
-
+        ax.plot(list_of_variables[0], list_of_variables[3])
+        plt.xticks(np.arange(0, max(list_of_variables[0]) + 0.5, 0.5))
+        plt.yticks(
+            np.arange(min(list_of_variables[3]), max(list_of_variables[3]),
+                      5))
+        plt.xlim(0, max(list_of_variables[0]))
+        plt.ylim(min(list_of_variables[3]), max(list_of_variables[3]))
+        plt.grid()
+        ax.axhline()
+        ax.axvline()
         canvas = FigureCanvasTkAgg(fig, master=self)
         canvas.draw()
 
