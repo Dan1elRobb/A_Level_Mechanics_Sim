@@ -27,7 +27,7 @@ def calc_variables_over_time(angle, end_time, initial_vel, initial_height):
 
 
 def find_index_of_second_zero_displacement(dis_list):
-    a = [i for i, n in enumerate(dis_list) if n < 3]
+    a = [i for i, n in enumerate(dis_list) if n < 5]
     return a[1]
 
 
@@ -81,7 +81,27 @@ class YVelocityTimeGraphFrame(tk.Frame):
         plt.xlim(0, max(list_of_variables[0]))
         plt.ylim(min(list_of_variables[3]), max(list_of_variables[3]))
         plt.grid()
-        ax.axhline()
+        ax.axhline().set_color('black')
+        ax.axvline()
+        canvas = FigureCanvasTkAgg(fig, master=self)
+        canvas.draw()
+
+        canvas.get_tk_widget().pack()
+
+class XDisplacementTimeGraphFrame(tk.Frame):
+    def __init__(self):
+        super().__init__()
+        fig = plt.figure(figsize=(20, 50))
+        ax = plt.axes()
+        ax.plot(list_of_variables[0], list_of_variables[2])
+        plt.xticks(np.arange(0, max(list_of_variables[0]) + 0.5, 0.5))
+        plt.yticks(
+            np.arange(0, max(list_of_variables[2]),
+                      5))
+        plt.xlim(0, max(list_of_variables[0]))
+        plt.ylim(0, max(list_of_variables[2]))
+        plt.grid()
+        ax.axhline().set_color('black')
         ax.axvline()
         canvas = FigureCanvasTkAgg(fig, master=self)
         canvas.draw()
@@ -89,8 +109,9 @@ class YVelocityTimeGraphFrame(tk.Frame):
         canvas.get_tk_widget().pack()
 
 
+
 root = tk.Tk()
 root.title('Velocity time graph')
-graph_page = YDisplacementTimeGraphFrame()
+graph_page = XDisplacementTimeGraphFrame()
 graph_page.pack()
 root.mainloop()
