@@ -111,7 +111,13 @@ class XDisplacementTimeGraphFrame(tk.Frame):
 
 
 root = tk.Tk()
-root.title('Velocity time graph')
-graph_page = XDisplacementTimeGraphFrame()
-graph_page.pack()
+root.title('Graphs')
+y_dis_graph_page = YDisplacementTimeGraphFrame()
+x_dis_graph_page = XDisplacementTimeGraphFrame()
+y_vel_graph_page = YVelocityTimeGraphFrame()
+
+y_dis_graph_page.pack()
+x_dis_graph_page.pack()
+y_vel_graph_page.pack()
+
 root.mainloop()

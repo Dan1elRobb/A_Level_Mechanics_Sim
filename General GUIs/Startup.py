@@ -1,5 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
+from Collisions.Question_Type_choice_collissions import run_collision_question_selector
+from Blocks_On_Slopes.blocks_on_slopes_variable_inputs import run_bons_inputs
+from Projectiles.Projectiles_Variables_Inputs import run_inputs_proj
 
 class WelcomeScreen(tk.Tk):
     def __init__(self):
@@ -32,15 +35,15 @@ class WelcomeScreen(tk.Tk):
 
     def blocks_button_clicked(self):
         # Placeholder for the functionality when the "Blocks on Slopes" button is clicked
-        print("Blocks on Slopes button clicked")
+        run_bons_inputs()
 
     def collisions_button_clicked(self):
         # Placeholder for the functionality when the "Collisions" button is clicked
-        print("Collisions button clicked")
+        run_collision_question_selector()
 
     def projectiles_button_clicked(self):
         # Placeholder for the functionality when the "Projectiles" button is clicked
-        print("Projectiles button clicked")
+        run_inputs_proj()
 
 if __name__ == "__main__":
     welcome_screen = WelcomeScreen()
