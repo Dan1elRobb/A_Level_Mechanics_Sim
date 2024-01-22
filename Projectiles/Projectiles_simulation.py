@@ -8,11 +8,11 @@ def run_sim():
     pg.init()
     with open('PVars.txt', "r") as file:
         # Read each line and assign values to variables
-        user_angle = int(file.readline().strip())
-        user_mass = int(file.readline().strip())
-        user_initial_vel = int(file.readline().strip())
-        user_starting_height = int(file.readline().strip())
-        user_end_time = int(file.readline().strip())
+        user_angle = float(file.readline().strip())
+        user_mass = float(file.readline().strip())
+        user_initial_vel = float(file.readline().strip())
+        user_starting_height = float(file.readline().strip())
+        user_end_time = float(file.readline().strip())
     # Simulation setup
     mass = user_mass
     angle = user_angle  # Initial angle in degrees
@@ -39,7 +39,7 @@ def run_sim():
 
 
     def find_index_of_second_zero_displacement(dis_list):
-        a = [i for i, n in enumerate(dis_list) if n < 3]
+        a = [i for i, n in enumerate(dis_list) if n < 10]
         return a[1]
 
 
@@ -95,7 +95,7 @@ def run_sim():
 
     # Add a static floor
     floor_static = space.static_body
-    floor_segment = pymunk.Segment(floor_static, (0, 10), (WINDOW_SIZE[0], 10), 4)
+    floor_segment = pymunk.Segment(floor_static, (0, 10), (WINDOW_SIZE[0]+10, 10), 4)
     floor_segment.elasticity = 0.8
     floor_segment.friction = 0.5
     space.add(floor_segment)
