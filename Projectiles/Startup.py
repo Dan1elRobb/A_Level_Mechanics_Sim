@@ -1,8 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from Collisions.Question_Type_choice_collissions import run_collision_question_selector
-from Blocks_On_Slopes.blocks_on_slopes_variable_inputs import run_bons_inputs
-from Projectiles.Projectiles_Variables_Inputs import run_inputs_proj
+from Projectiles_Variables_Inputs import run_inputs_proj
+
 
 class WelcomeScreen(tk.Tk):
     def __init__(self):
@@ -12,7 +11,8 @@ class WelcomeScreen(tk.Tk):
         self.configure(bg='#f0f0f0')  # Set background color
 
         # Welcome Label
-        welcome_label = ttk.Label(self, text='Welcome to the Mechanics simulator', font=('Helvetica', 16), background='#f0f0f0')
+        welcome_label = ttk.Label(self, text='Welcome to the Mechanics simulator', font=('Helvetica', 16),
+                                  background='#f0f0f0')
         welcome_label.pack(pady=20)
 
         # Button Frame
@@ -35,15 +35,16 @@ class WelcomeScreen(tk.Tk):
 
     def blocks_button_clicked(self):
         # Placeholder for the functionality when the "Blocks on Slopes" button is clicked
-        run_bons_inputs()
+        print('BONS')
 
     def collisions_button_clicked(self):
         # Placeholder for the functionality when the "Collisions" button is clicked
-        run_collision_question_selector()
+        print('C')
 
     def projectiles_button_clicked(self):
         # Placeholder for the functionality when the "Projectiles" button is clicked
         run_inputs_proj()
+
 
 if __name__ == "__main__":
     welcome_screen = WelcomeScreen()

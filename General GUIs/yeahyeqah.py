@@ -5,7 +5,7 @@ import math
 def run_sim():
     # Initialize Pygame
     pg.init()
-    with open('PVars.txt', "r") as file:
+    with open('../Projectiles/PVars.txt', "r") as file:
         # Read each line and assign values to variables
         user_angle = float(file.readline().strip())
         user_mass = float(file.readline().strip())

@@ -1,11 +1,11 @@
-from Projectiles_simulation import run_sim
+from Projectiles_simulation import run_proj_sim
 
 import tkinter as tk
 from tkinter import messagebox
 
 
 def run_sim_or_cancel():
-    class SimulationApp:
+    class RunSimOrCancelApp:
         def __init__(self, master):
             self.master = master
             self.master.title("Projectile Simulation")
@@ -24,7 +24,7 @@ def run_sim_or_cancel():
 
         def start_simulation(self):
             # Add your simulation start functionality here
-            run_sim()
+            run_proj_sim()
 
         def exit_application(self):
             result = messagebox.askquestion("Exit", "Are you sure you want to exit?", icon='warning')
@@ -32,5 +32,5 @@ def run_sim_or_cancel():
                 self.master.destroy()
 
     root = tk.Tk()
-    app = SimulationApp(root)
+    app = RunSimOrCancelApp(root)
     root.mainloop()

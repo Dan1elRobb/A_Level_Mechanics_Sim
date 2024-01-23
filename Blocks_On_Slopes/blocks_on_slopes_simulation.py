@@ -8,7 +8,7 @@ with open('BOSVars.txt', "r") as file:
     mass = int(file.readline().strip())
     angle = int(file.readline().strip())
     friction = int(file.readline().strip())
-    mew = int(file.readline().strip())
+    mew = float(file.readline().strip())
     end_time = int(file.readline().strip())
     acc = int(file.readline().strip())
 # Initialise pygame

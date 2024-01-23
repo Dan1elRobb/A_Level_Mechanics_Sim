@@ -3,7 +3,7 @@ import pymunk.pygame_util
 import pygame as pg
 import math
 
-def run_sim():
+def run_proj_sim():
     # Initialize Pygame
     pg.init()
     with open('PVars.txt', "r") as file:
