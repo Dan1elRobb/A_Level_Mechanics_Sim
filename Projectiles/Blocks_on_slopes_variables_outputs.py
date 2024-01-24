@@ -52,12 +52,10 @@ def calc_v_over_time(angle, mew, end_time):
 
 with open('BOSVars.txt', "r") as file:
     # Read each line and assign values to variables
-    mass = int(file.readline().strip())
-    angle = int(file.readline().strip())
-    friction = int(file.readline().strip())
+    mass = float(file.readline().strip())
+    angle = float(file.readline().strip())
     mew = float(file.readline().strip())
-    end_time = int(file.readline().strip())
-    acc = int(file.readline().strip())
+    end_time = float(file.readline().strip())
 
 
 vel_list = calc_v_over_time(math.radians(angle), mew, end_time)[0]

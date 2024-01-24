@@ -3,6 +3,7 @@ import pymunk.pygame_util
 import pygame as pg
 import math
 from graphs_or_rerun_sim_projectiles import graphs_or_rerun
+from Projectile_Variables_Outputs import run_proj_outputs
 def run_proj_sim():
     # Initialize Pygame
     pg.init()
@@ -113,6 +114,8 @@ def run_proj_sim():
             if event.type == pg.QUIT:
                 running = False
             elif event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    pg.quit()
                 if event.key == pg.K_SPACE:
                     if paused:
                         pause_time = pg.time.get_ticks() / 1000.0  # Convert milliseconds to seconds

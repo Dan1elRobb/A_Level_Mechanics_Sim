@@ -81,7 +81,7 @@ def run_collissions_wall_sim():
         space.step(dt)
 
         # Print the velocity of the particle
-        print("Particle Velocity:", particle.body.velocity)
+        print("Particle Velocity:", particle.body.velocity[0])
 
         # Draw the simulation
         screen.fill((255, 255, 255))

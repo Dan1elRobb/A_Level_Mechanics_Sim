@@ -2,11 +2,22 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import tkinter as tk
+import math
 matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from BlockOnSlopeCalcSuite import calc_v_over_time
 
 
+def calc_v_over_time(angle, mew, end_time):
+    t = 0
+    time_list = []
+    vel_list = []
+    while t < end_time:
+        v = 9.8 * t * (math.sin(angle) - math.cos(angle) * mew)
+        vel_list.append(v)
+        time_list.append(t)
+        t += 0.01
+    return vel_list, time_list
 class VelocityTimeGraphFrame(tk.Frame):
     def __init__(self):
         super().__init__()

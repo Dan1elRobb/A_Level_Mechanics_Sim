@@ -25,7 +25,6 @@ def run_sim_or_cancel():
         def start_simulation(self):
             # Add your simulation start functionality here
             run_proj_sim()
-            run_proj_outputs()
 
         def exit_application(self):
             result = messagebox.askquestion("Exit", "Are you sure you want to exit?", icon='warning')

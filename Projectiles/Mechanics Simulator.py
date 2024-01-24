@@ -5,6 +5,7 @@ from run_collisions_two_particles_sim_or_cancel import run_particle_collision_si
 from run_collisions_partcle_and_wall_or_cancel import run_wall_collision_sim_or_cancel
 from run_blocks_on_slopes_or_cancel import run_bons_sim_or_cancel
 
+
 class WelcomeScreen(tk.Frame):
     def __init__(self, master, switch_frame_callback):
         super().__init__(master)
