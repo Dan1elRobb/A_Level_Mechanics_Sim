@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-import Projectiles_Variables_Inputs
 
 
 class WelcomeScreen(tk.Tk):

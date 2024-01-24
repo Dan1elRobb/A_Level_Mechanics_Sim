@@ -2,7 +2,7 @@ import pymunk
 import pymunk.pygame_util
 import pygame as pg
 import math
-
+from graphs_or_rerun_sim_projectiles import graphs_or_rerun
 def run_proj_sim():
     # Initialize Pygame
     pg.init()
@@ -79,10 +79,11 @@ def run_proj_sim():
 
         def update(self, dt):
             # Update the physics simulation
-            space.step(dt)
+            if not paused:
+                space.step(dt)
 
-            # Store the current position in the list
-            self.previous_positions.append((self.body.position.x, WINDOW_SIZE[1] - self.body.position.y))
+                # Store the current position in the list
+                self.previous_positions.append((self.body.position.x, WINDOW_SIZE[1] - self.body.position.y))
 
         def draw(self):
             # Draw the projectile with inverted y-coordinate
@@ -104,15 +105,29 @@ def run_proj_sim():
     projectile = Projectile(mass, angle, start_height, initial_velocity)
 
     running = True
+    paused = False
+    simulation_time = 0
+    total_elapsed_time = 0
     while running:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
+            elif event.type == pg.KEYDOWN:
+                if event.key == pg.K_SPACE:
+                    if paused:
+                        pause_time = pg.time.get_ticks() / 1000.0  # Convert milliseconds to seconds
+                        total_elapsed_time += (pause_time - simulation_time)
+                    paused = not paused
+        if not paused:
+            dt = clock.tick(60) / 1000.0  # Convert milliseconds to seconds
 
-        dt = clock.tick(60) / 1000.0  # Convert milliseconds to seconds
+            # Update the simulation
+            projectile.update(dt)
 
-        # Update the simulation
-        projectile.update(dt)
+            simulation_time += dt
+
+            if simulation_time >= user_end_time:
+                running = False
 
         # Draw the simulation
         screen.fill((255, 255, 255))
@@ -143,5 +158,6 @@ def run_proj_sim():
 
         # Update the Pygame display
         pg.display.flip()
-
+    graphs_or_rerun()
     pg.quit()
+

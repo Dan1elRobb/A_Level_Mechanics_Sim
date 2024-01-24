@@ -131,4 +131,3 @@ def projectiles_graphs():
     app = GraphsApp()
     app.mainloop()
 
-projectiles_graphs()

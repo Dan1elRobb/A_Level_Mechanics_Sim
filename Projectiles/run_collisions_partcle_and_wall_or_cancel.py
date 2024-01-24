@@ -1,10 +1,9 @@
-from Projectiles_simulation import run_proj_sim
-from Projectile_Variables_Outputs import run_proj_outputs
+from collisions_simulation_particle_and_wall import run_collissions_wall_sim
 import tkinter as tk
 from tkinter import messagebox
 
 
-def run_sim_or_cancel():
+def run_wall_collision_sim_or_cancel():
     class RunSimOrCancelApp:
         def __init__(self, master):
             self.master = master
@@ -24,8 +23,7 @@ def run_sim_or_cancel():
 
         def start_simulation(self):
             # Add your simulation start functionality here
-            run_proj_sim()
-            run_proj_outputs()
+            run_collissions_wall_sim()
 
         def exit_application(self):
             result = messagebox.askquestion("Exit", "Are you sure you want to exit?", icon='warning')

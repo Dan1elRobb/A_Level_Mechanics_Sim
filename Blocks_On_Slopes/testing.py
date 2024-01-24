@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from blocks_on_slopes_simulation import Sim
+from Projectiles.blocks_on_slopes_simulation import Sim
 
 
 class App(tk.Tk):
