@@ -32,6 +32,5 @@ def run_collision_question_selector():
             # Placeholder for the functionality when the "Particle and Wall" button is clicked
             print("Particle and Wall button clicked")
 
-    if __name__ == "__main__":
-        collision_selector = CollisionQuestionSelector()
-        collision_selector.mainloop()
+    collision_selector = CollisionQuestionSelector()
+    collision_selector.mainloop()

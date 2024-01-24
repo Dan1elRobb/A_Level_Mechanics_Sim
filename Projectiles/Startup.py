@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
-from Projectiles_Variables_Inputs import run_inputs_proj
+import Projectiles_Variables_Inputs
 
 
 class WelcomeScreen(tk.Tk):
-    def __init__(self):
+    def __init__(self,master,switch_frame_callback):
         super().__init__()
         self.title('A level Mechanics Simulator')
         self.geometry('400x300')
@@ -43,7 +43,7 @@ class WelcomeScreen(tk.Tk):
 
     def projectiles_button_clicked(self):
         # Placeholder for the functionality when the "Projectiles" button is clicked
-        run_inputs_proj()
+        Projectiles_Variables_Inputs.running_inputs()
 
 
 if __name__ == "__main__":
