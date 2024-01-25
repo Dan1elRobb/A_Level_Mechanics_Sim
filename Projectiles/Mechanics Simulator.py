@@ -4,6 +4,8 @@ from tkinter import ttk
 from run_collisions_two_particles_sim_or_cancel import run_particle_collision_sim_or_cancel
 from run_collisions_partcle_and_wall_or_cancel import run_wall_collision_sim_or_cancel
 from run_blocks_on_slopes_or_cancel import run_bons_sim_or_cancel
+import sys
+from tkinter import messagebox
 
 
 class WelcomeScreen(tk.Frame):
@@ -31,6 +33,12 @@ class WelcomeScreen(tk.Frame):
         projectiles_button = ttk.Button(button_frame, text='Projectiles', command=self.projectiles_button_clicked)
         projectiles_button.grid(row=0, column=2, padx=10, pady=10)
 
+        exit_button = ttk.Button(button_frame, text='Exit Application', command=self.exit_button_clicked)
+        exit_button.grid(row=5, column=1, padx=10, pady=10)
+
+        instructions_button = ttk.Button(button_frame, text='Instructions!', command=self.instructions_button_clicked)
+        instructions_button.grid(row=4, column=1, padx=10, pady=10)
+
         # Custom style for the Frame to set the background color
         self.style = ttk.Style()
         self.style.configure('Button.TFrame', background='#f0f0f0')
@@ -46,6 +54,41 @@ class WelcomeScreen(tk.Frame):
     def projectiles_button_clicked(self):
         # Placeholder for the functionality when the "Projectiles" button is clicked
         self.switch_frame_callback(ProjInputWindow)
+
+    def exit_button_clicked(self):
+        result = messagebox.askquestion("Exit", "Are you sure you want to exit?", icon='warning')
+        if result == 'yes':
+            sys.exit()
+
+    def instructions_button_clicked(self):
+        self.switch_frame_callback(HowToUse)
+
+
+class HowToUse(tk.Frame):
+    def __init__(self, master, switch_frame_callback):
+        super().__init__(master)
+        self.switch_frame_callback = switch_frame_callback
+
+        instructions_label = ttk.Label(self, text='Welcome to my mechanics simulator.\n To use select your desired '
+                                                  'question type and enter the associated variables (End time means the'
+                                                  ' duration of the simulation)\n Once satisfied with your variables '
+                                                  'simply press OK then the run sim button on the following window.\n '
+                                                  'Press the spacebar to pause the simulation at any time.\n Once the '
+                                                  'simulation has expired a pop up window will appear asking you if you'
+                                                  ' would like to see graphs.\n Select the Graphs button to get the '
+                                                  'relevant graphs for the problem chosen.\n Enjoy :D',
+                                       font=('Calibri', 10))
+        instructions_label.pack()
+
+        button_frame = ttk.Frame(self, padding=10)
+        button_frame.pack()
+
+        particles_button = ttk.Button(button_frame, text='Back to Question Selector',
+                                      command=self.back_to_questions_button_clicked)
+        particles_button.grid(row=0, column=0, padx=10, pady=10)
+
+    def back_to_questions_button_clicked(self):
+        self.switch_frame_callback(WelcomeScreen)
 
 
 class CollisionQuestionSelector(tk.Frame):
@@ -274,27 +317,27 @@ class BlocksOnSlopesInputs(tk.Frame):
         self.end_time_var = tk.DoubleVar(value=15)
 
         # Labels and entry widgets using grid
-        tk.Label(self, text="Angle of slope (degrees):").grid(row=0, column=0, padx=10, pady=5)
+        tk.Label(self, text="Angle of slope (degrees):").grid(row=0, column=1, padx=10, pady=5)
         self.velocity_particle1_entry = tk.Entry(self, textvariable=self.angle_var)
-        self.velocity_particle1_entry.grid(row=0, column=1, padx=10, pady=5)
+        self.velocity_particle1_entry.grid(row=0, column=2, padx=10, pady=5)
 
-        tk.Label(self, text="Mass Block (kg):").grid(row=1, column=0, padx=10, pady=5)
+        tk.Label(self, text="Mass Block (kg):").grid(row=1, column=1, padx=10, pady=5)
         self.mass_particle1_entry = tk.Entry(self, textvariable=self.mass_particle_var)
-        self.mass_particle1_entry.grid(row=1, column=1, padx=10, pady=5)
+        self.mass_particle1_entry.grid(row=1, column=2, padx=10, pady=5)
 
-        tk.Label(self, text="Coefficient of friction:").grid(row=2, column=0, padx=10, pady=5)
+        tk.Label(self, text="Coefficient of friction:").grid(row=2, column=1, padx=10, pady=5)
         self.coefficient_of_restitution_entry = tk.Entry(self, textvariable=self.coefficient_of_friction_var)
-        self.coefficient_of_restitution_entry.grid(row=2, column=1, padx=10, pady=5)
+        self.coefficient_of_restitution_entry.grid(row=2, column=2, padx=10, pady=5)
 
-        tk.Label(self, text="End Time (s):").grid(row=3, column=0, padx=10, pady=5)
+        tk.Label(self, text="End Time (s):").grid(row=3, column=1, padx=10, pady=5)
         self.end_time_entry = tk.Entry(self, textvariable=self.end_time_var)
-        self.end_time_entry.grid(row=3, column=1, padx=10, pady=5)
+        self.end_time_entry.grid(row=3, column=2, padx=10, pady=5)
 
         # OK button
-        ttk.Button(self, text="OK", command=self.ok_button_click).grid(row=6, column=0, columnspan=2, pady=10)
+        ttk.Button(self, text="OK", command=self.ok_button_click).grid(row=6, column=1, columnspan=2, pady=10)
 
         # Back button
-        ttk.Button(self, text='Go back', command=self.back_button_click).grid(row=7, column=0, columnspan=2,
+        ttk.Button(self, text='Go back', command=self.back_button_click).grid(row=7, column=1, columnspan=2,
                                                                               pady=10)
 
     def ok_button_click(self):
@@ -320,7 +363,7 @@ class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Dans Mechanics Sim")
-        self.geometry("400x300")
+        self.geometry("700x300")
 
         self.current_frame = None
         self.switch_frame(WelcomeScreen)

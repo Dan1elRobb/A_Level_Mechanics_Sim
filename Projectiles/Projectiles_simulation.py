@@ -153,7 +153,7 @@ def run_proj_sim():
 
         # Draw the height on the static vertical line
         font = pg.font.Font(None, 36)
-        height_text = font.render(str(WINDOW_SIZE[1].__floor__()), True, (0, 0, 0))
+        height_text = font.render(str(WINDOW_SIZE[1])[0:3], True, (0, 0, 0))
         screen.blit(height_text, (WINDOW_SIZE[0] // 2 - 20, WINDOW_SIZE[1] // 2))
 
         # Draw the static vertical line with transparency
