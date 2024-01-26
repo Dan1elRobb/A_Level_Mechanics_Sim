@@ -1,7 +1,7 @@
 from blocks_on_slopes_simulation import run_bons_sim
 import tkinter as tk
 from tkinter import messagebox
-
+from Blocks_on_slopes_variables_outputs import run_bons_outputs
 
 def run_bons_sim_or_cancel():
     class RunSimOrCancelApp:
@@ -17,6 +17,11 @@ def run_bons_sim_or_cancel():
             start_button = tk.Button(self.master, text="Start Sim", command=self.start_simulation)
             start_button.pack(pady=20)
 
+            ''' Button to start the outputs'''
+            output_button = tk.Button(self.master, text="Open outputs", command=self.start_outputs)
+            output_button.pack(pady=20)
+
+
             # Button to exit the application
             exit_button = tk.Button(self.master, text="Exit", command=self.exit_application)
             exit_button.pack()
@@ -30,6 +35,8 @@ def run_bons_sim_or_cancel():
             if result == 'yes':
                 self.master.destroy()
 
+        def start_outputs(self):
+            run_bons_outputs()
     root = tk.Tk()
     app = RunSimOrCancelApp(root)
     root.mainloop()
