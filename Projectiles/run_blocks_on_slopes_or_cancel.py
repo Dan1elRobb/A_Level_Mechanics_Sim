@@ -7,7 +7,7 @@ def run_bons_sim_or_cancel():
     class RunSimOrCancelApp:
         def __init__(self, master):
             self.master = master
-            self.master.title("Projectile Simulation")
+            self.master.title("Blocks On Slopes Simulation")
             self.master.geometry("300x150")
 
             self.create_widgets()
