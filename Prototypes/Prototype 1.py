@@ -1,56 +1,31 @@
 import sys, random
-random.seed(1) # make the simulation the same each time, easier to debug
 import pygame
 import pymunk
 import pymunk.pygame_util
 
+
 def add_ball(space):
-    """Add a ball to the given space at a random position"""
     mass = 3
     radius = 25
-    inertia = pymunk.moment_for_circle(mass, 0, radius, (0,0))
+    inertia = pymunk.moment_for_circle(mass, 0, radius, (0, 0))
     body = pymunk.Body(mass, inertia)
-    x = random.randint(120,300)
+    x = random.randint(120, 300)
     body.position = x, 50
-    shape = pymunk.Circle(body, radius, (0,0))
+    shape = pymunk.Circle(body, radius, (0, 0))
     shape.friction = 1
     space.add(body, shape)
     return shape
 
-def add_L(space):
-    """Add a inverted L shape with two joints"""
-    rotation_center_body = pymunk.Body(body_type = pymunk.Body.STATIC)
-    rotation_center_body.position = (300,300)
-
-    rotation_limit_body = pymunk.Body(body_type = pymunk.Body.STATIC)
-    rotation_limit_body.position = (200,300)
-
-    body = pymunk.Body(10, 10000)
-    body.position = (300,300)
-    l1 = pymunk.Segment(body, (-150, 0), (255.0, 0.0), 5.0)
-    l2 = pymunk.Segment(body, (-150.0, 0), (-150.0, -50.0), 5.0)
-    l1.friction = 1
-    l2.friction = 1
-    l1.mass = 8
-    l2.mass = 1
-
-    rotation_center_joint = pymunk.PinJoint(body, rotation_center_body, (0,0), (0,0))
-    joint_limit = 25
-    rotation_limit_joint = pymunk.SlideJoint(body, rotation_limit_body, (-100,0), (0,0), 0, joint_limit)
-
-    space.add(l1, l2, body, rotation_center_joint, rotation_limit_joint)
-    return l1,l2
 
 def main():
     pygame.init()
     screen = pygame.display.set_mode((600, 600))
-    pygame.display.set_caption("Joints. Just wait and the L will tip over")
+    pygame.display.set_caption("Balls")
     clock = pygame.time.Clock()
 
     space = pymunk.Space()
     space.gravity = (0.0, 900.0)
 
-    lines = add_L(space)
     balls = []
     draw_options = pymunk.pygame_util.DrawOptions(screen)
 
@@ -68,7 +43,7 @@ def main():
             ball_shape = add_ball(space)
             balls.append(ball_shape)
 
-        screen.fill((255,255,255))
+        screen.fill((255, 255, 255))
 
         balls_to_remove = []
         for ball in balls:
@@ -81,10 +56,11 @@ def main():
 
         space.debug_draw(draw_options)
 
-        space.step(1/50.0)
+        space.step(1 / 50.0)
 
         pygame.display.flip()
         clock.tick(50)
+
 
 if __name__ == '__main__':
     main()
