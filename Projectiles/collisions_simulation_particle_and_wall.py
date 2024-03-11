@@ -3,7 +3,7 @@ import pymunk.pygame_util
 import pygame as pg
 
 def run_collissions_wall_sim():
-# Initialize Pygame
+    # Initialize Pygame
     with open('CWPVars.txt', "r") as file:
         # Read each line and assign values to variables
         user_mass_particle = float(file.readline().strip())
@@ -70,33 +70,45 @@ def run_collissions_wall_sim():
     handler.pre_solve = wall_collision_handler
 
     running = True
+    paused = False
+    start_time = pg.time.get_ticks()
     while running:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
+            elif event.type == pg.KEYDOWN:
+                if event.key == pg.K_SPACE:
+                    paused = not paused
 
-        dt = clock.tick(60) / 1000.0  # Convert milliseconds to seconds
+        if not paused:
+            current_time = pg.time.get_ticks()
+            elapsed_time = (current_time - start_time) / 1000.0  # Convert milliseconds to seconds
 
-        # Update the simulation
-        space.step(dt)
+            if elapsed_time >= user_end_time:
+                running = False
 
-        # Print the velocity of the particle
-        print("Particle Velocity:", particle.body.velocity[0])
+            dt = clock.tick(60) / 1000.0  # Convert milliseconds to seconds
 
-        # Draw the simulation
-        screen.fill((255, 255, 255))
+            # Update the simulation
+            space.step(dt)
 
-        # Manually draw Pymunk shapes
-        for shape in space.shapes:
-            if isinstance(shape, pymunk.shapes.Circle):
-                pg.draw.circle(screen, shape.color,
-                               (round(shape.body.position.x), round(WINDOW_SIZE[1] - shape.body.position.y)),
-                               int(shape.radius))
-            elif isinstance(shape, pymunk.shapes.Segment):
-                pg.draw.line(screen, (0, 0, 0), (round(shape.a.x), round(WINDOW_SIZE[1] - shape.a.y)),
-                             (round(shape.b.x), round(WINDOW_SIZE[1] - shape.b.y)), 5)
 
-        # Update the Pygame display
-        pg.display.flip()
+            # Draw the simulation
+            screen.fill((255, 255, 255))
+
+            # Manually draw Pymunk shapes
+            for shape in space.shapes:
+                if isinstance(shape, pymunk.shapes.Circle):
+                    pg.draw.circle(screen, shape.color,
+                                   (round(shape.body.position.x), round(WINDOW_SIZE[1] - shape.body.position.y)),
+                                   int(shape.radius))
+                elif isinstance(shape, pymunk.shapes.Segment):
+                    pg.draw.line(screen, (0, 0, 0), (round(shape.a.x), round(WINDOW_SIZE[1] - shape.a.y)),
+                                 (round(shape.b.x), round(WINDOW_SIZE[1] - shape.b.y)), 5)
+
+            # Update the Pygame display
+            pg.display.flip()
 
     pg.quit()
+
+

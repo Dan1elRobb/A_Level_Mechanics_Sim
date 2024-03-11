@@ -18,10 +18,6 @@ def run_sim_or_cancel():
             start_button = tk.Button(self.master, text="Start Sim", command=self.start_simulation)
             start_button.pack(pady=20)
 
-            ''' Button to start the outputs'''
-            output_button = tk.Button(self.master, text="Open outputs", command=self.start_outputs)
-            output_button.pack(pady=20)
-
             # Button to exit the application
             exit_button = tk.Button(self.master, text="Exit", command=self.exit_application)
             exit_button.pack()
@@ -35,8 +31,6 @@ def run_sim_or_cancel():
             if result == 'yes':
                 self.master.destroy()
 
-        def start_outputs(self):
-            run_proj_outputs()
 
     root = tk.Tk()
     app = RunSimOrCancelApp(root)
