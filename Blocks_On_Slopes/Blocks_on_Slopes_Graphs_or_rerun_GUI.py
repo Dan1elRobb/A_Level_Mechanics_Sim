@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from Projectiles.blocks_on_slopes_simulation import Sim
+from Main.blocks_on_slopes_simulation import Sim
 from graphing_blocks_on_slopes import VelocityTimeGraphFrame
 
 

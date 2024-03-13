@@ -39,15 +39,23 @@ def run_proj_sim():
         return time_list, y_dis_list, x_dis_list, y_vel_list
 
 
-    def find_index_of_second_zero_displacement(dis_list):
-        a = [i for i, n in enumerate(dis_list) if n < 10]
+    def find_index_of_second_zero_displacement_using25(dis_list):
+        a = [i for i, n in enumerate(dis_list) if n < 25]
         return a[1]
 
+    def find_index_of_second_zero_displacement_using10(dis_list):
+        a = [i for i, n in enumerate(dis_list) if n < 15]
+        return a[1]
 
-    index_of_second_zero_displacement = find_index_of_second_zero_displacement(
-        calc_variables_over_time(user_angle, user_end_time, user_initial_vel, user_starting_height)[1])
     # Constants
-    WINDOW_SIZE = (max(500,max(calc_variables_over_time(user_angle,user_end_time,user_initial_vel,user_starting_height)[2])), max(50, max(calc_variables_over_time(user_angle, user_end_time, user_initial_vel, user_starting_height)[1][0:index_of_second_zero_displacement])+25))
+    if user_initial_vel <= 40:
+        WINDOW_SIZE = (400,75)
+    elif user_initial_vel >40 and user_initial_vel <= 100:
+        WINDOW_SIZE = (1000,300)
+    elif user_initial_vel > 100 and user_initial_vel <= 200:
+        WINDOW_SIZE = (1200,500)
+    elif user_initial_vel > 200:
+        WINDOW_SIZE = (1200,700)
     GRAVITY = 9.8  # Real-world gravity in meters per second squared
 
     # Pygame setup
@@ -161,6 +169,6 @@ def run_proj_sim():
 
         # Update the Pygame display
         pg.display.flip()
-    graphs_or_rerun()
     pg.quit()
+    graphs_or_rerun()
 

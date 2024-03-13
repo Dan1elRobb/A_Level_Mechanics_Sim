@@ -1,6 +1,7 @@
 import pymunk
 import pymunk.pygame_util
 import pygame as pg
+from graphs_or_exit_cwp import cwp_graphs_or_exit
 
 def run_collissions_wall_sim():
     # Initialize Pygame
@@ -14,7 +15,7 @@ def run_collissions_wall_sim():
     pg.init()
 
     # Constants
-    WINDOW_SIZE = (800, 600)
+    WINDOW_SIZE = (400, 300)
 
     # Pygame setup
     screen = pg.display.set_mode(WINDOW_SIZE)
@@ -38,6 +39,15 @@ def run_collissions_wall_sim():
             self.shape.color = color
             space.add(self.body, self.shape)
 
+        def set_vel(self, x, y):
+            self.body.velocity = (x, y)
+
+        def unpause(self, velocity):
+            self.body.velocity = velocity
+
+        def get_velocity(self):
+            return self.body.velocity
+
 
     # Collision handler for detecting collisions with the wall
     def wall_collision_handler(arbiter, space, data):
@@ -56,7 +66,7 @@ def run_collissions_wall_sim():
 
 
     # Create particle with a variable mass and initial velocity
-    particle = Particle(mass=user_mass_particle, radius=20, position=(200, 300), velocity=(user_vel_particle, 0),
+    particle = Particle(mass=user_mass_particle, radius=10, position=(350, 150), velocity=(user_vel_particle, 0),
                         color=(255, 0, 0))
 
     # Create a wall (static segment) at the right side of the window
@@ -71,44 +81,54 @@ def run_collissions_wall_sim():
 
     running = True
     paused = False
-    start_time = pg.time.get_ticks()
+    end_time = pg.time.get_ticks() + int(user_end_time * 1000)  # Convert seconds to milliseconds
+    velocities_particle = []
+    last_record_time = pg.time.get_ticks()
     while running:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_SPACE:
-                    paused = not paused
-
-        if not paused:
-            current_time = pg.time.get_ticks()
-            elapsed_time = (current_time - start_time) / 1000.0  # Convert milliseconds to seconds
-
-            if elapsed_time >= user_end_time:
-                running = False
-
-            dt = clock.tick(60) / 1000.0  # Convert milliseconds to seconds
-
-            # Update the simulation
-            space.step(dt)
+                    if paused:
+                        paused = False
+                        particle.unpause(saved_velocity)
+                    else:
+                        paused = True
+                        saved_velocity = particle.body.velocity
+                        particle.set_vel(0, 0)
 
 
-            # Draw the simulation
-            screen.fill((255, 255, 255))
+        current_time = pg.time.get_ticks()
+        if current_time > end_time:
+            running = False
 
-            # Manually draw Pymunk shapes
-            for shape in space.shapes:
-                if isinstance(shape, pymunk.shapes.Circle):
-                    pg.draw.circle(screen, shape.color,
-                                   (round(shape.body.position.x), round(WINDOW_SIZE[1] - shape.body.position.y)),
-                                   int(shape.radius))
-                elif isinstance(shape, pymunk.shapes.Segment):
-                    pg.draw.line(screen, (0, 0, 0), (round(shape.a.x), round(WINDOW_SIZE[1] - shape.a.y)),
-                                 (round(shape.b.x), round(WINDOW_SIZE[1] - shape.b.y)), 5)
+        dt = clock.tick(60) / 1000.0  # Convert milliseconds to seconds
 
-            # Update the Pygame display
-            pg.display.flip()
+        # Update the simulation
+        space.step(dt)
 
+        # Draw the simulation
+        screen.fill((255, 255, 255))
+
+        if current_time - last_record_time >= 10:  # 100 milliseconds (0.1 second)
+            velocities_particle.append(particle.get_velocity())
+            last_record_time = current_time
+        # Manually draw Pymunk shapes
+        for shape in space.shapes:
+            if isinstance(shape, pymunk.shapes.Circle):
+                pg.draw.circle(screen, shape.color,
+                               (round(shape.body.position.x), round(WINDOW_SIZE[1] - shape.body.position.y)),
+                               int(shape.radius))
+            elif isinstance(shape, pymunk.shapes.Segment):
+                pg.draw.line(screen, (0, 0, 0), (round(shape.a.x), round(WINDOW_SIZE[1] - shape.a.y)),
+                             (round(shape.b.x), round(WINDOW_SIZE[1] - shape.b.y)), 5)
+
+        # Update the Pygame display
+        pg.display.flip()
+    with open('CWP_vels.txt','w') as f:
+        for velocity in velocities_particle:
+            f.write(str(velocity[0]) + '\n')
     pg.quit()
-
+    cwp_graphs_or_exit()
 

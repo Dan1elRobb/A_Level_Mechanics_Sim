@@ -25,7 +25,7 @@ class WelcomeScreen(tk.Tk):
         collisions_button = ttk.Button(button_frame, text='Collisions', command=self.collisions_button_clicked)
         collisions_button.grid(row=0, column=1, padx=10, pady=10)
 
-        projectiles_button = ttk.Button(button_frame, text='Projectiles', command=self.projectiles_button_clicked)
+        projectiles_button = ttk.Button(button_frame, text='Main', command=self.projectiles_button_clicked)
         projectiles_button.grid(row=0, column=2, padx=10, pady=10)
 
         # Custom style for the Frame to set the background color
@@ -41,7 +41,7 @@ class WelcomeScreen(tk.Tk):
         print('C')
 
     def projectiles_button_clicked(self):
-        # Placeholder for the functionality when the "Projectiles" button is clicked
+        # Placeholder for the functionality when the "Main" button is clicked
         Projectiles_Variables_Inputs.running_inputs()
 
 

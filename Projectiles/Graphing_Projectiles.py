@@ -27,7 +27,7 @@ def projectiles_graphs():
         return time_list, y_dis_list, x_dis_list, y_vel_list
 
     def find_index_of_second_zero_displacement(dis_list):
-        a = [i for i, n in enumerate(dis_list) if n < 5]
+        a = [i for i, n in enumerate(dis_list) if n < 10]
         return a[1]
 
     with open('PVars.txt', "r") as file:
@@ -62,16 +62,27 @@ def projectiles_graphs():
         def create_graph(self):
             fig = plt.figure(figsize=(8, 4))
             ax = plt.axes()
-            ax.plot(list_of_variables[0][:find_index_of_second_zero_displacement(list_of_variables[1]) + 10],
-                    list_of_variables[1][:find_index_of_second_zero_displacement(list_of_variables[1]) + 10])
-            plt.xticks(np.arange(0, max(list_of_variables[0][:find_index_of_second_zero_displacement(
-                list_of_variables[1])]) + 0.5, 0.5))
-            plt.yticks(np.arange(0, max(list_of_variables[1][:find_index_of_second_zero_displacement(
-                list_of_variables[1])]) + 0.5, 2.5))
-            plt.xlim(0, max(list_of_variables[0][
-                            :find_index_of_second_zero_displacement(list_of_variables[1]) + 10]))
-            plt.ylim(0, max(list_of_variables[1][
-                            :find_index_of_second_zero_displacement(list_of_variables[1]) + 10]))
+            try:
+                ax.plot(list_of_variables[0][:find_index_of_second_zero_displacement(list_of_variables[1]) + 10],
+                        list_of_variables[1][:find_index_of_second_zero_displacement(list_of_variables[1]) + 10])
+                plt.xticks(np.arange(0, max(list_of_variables[0][:find_index_of_second_zero_displacement(
+                    list_of_variables[1])]) + 0.5, 0.5))
+                plt.yticks(np.arange(0, max(list_of_variables[1][:find_index_of_second_zero_displacement(
+                    list_of_variables[1])]) + 0.5, 2.5))
+            except IndexError:
+                ax.plot(list_of_variables[0],
+                        list_of_variables[1])
+                plt.xticks(np.arange(0, max(list_of_variables[0])))
+                plt.yticks(np.arange(0, max(list_of_variables[1])))
+
+            try:
+                plt.xlim(0, max(list_of_variables[0][
+                                :find_index_of_second_zero_displacement(list_of_variables[1]) + 10]))
+                plt.ylim(0, max(list_of_variables[1][
+                                :find_index_of_second_zero_displacement(list_of_variables[1]) + 10]))
+            except IndexError:
+                plt.xlim(0,max(list_of_variables[0]))
+                plt.ylim(0,max(list_of_variables[1]))
             plt.grid()
             plt.title(self.title)
             ax.axhline()

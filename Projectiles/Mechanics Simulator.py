@@ -258,7 +258,7 @@ class CollisionsParticleAndWallInputs(tk.Frame):
 
         # Default values
         self.mass_particle_var = tk.DoubleVar(value=5.0)
-        self.velocity_particle_var = tk.DoubleVar(value=150)
+        self.velocity_particle_var = tk.DoubleVar(value=20)
         self.coefficient_of_restitution_var = tk.DoubleVar(value=0.8)
         self.end_time_var = tk.DoubleVar(value=15)
 

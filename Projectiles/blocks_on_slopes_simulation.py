@@ -1,16 +1,19 @@
+'''This is a module which conducts the blocks on slopes simulation '''
+# Conduct imports - making use of the bons_exit_graphs module created earlier
 import pymunk
 import pymunk.pygame_util
 import pygame as pg
 import math
-
-
+from bons_exit_graphs import bons_graphs_or_exit
 def run_bons_sim():
+    # Open and read the text file in which the variables which the user inputted are stored and assign each a variable
     with open('BOSVars.txt', "r") as file:
         # Read each line and assign values to variables
         mass = float(file.readline().strip())
         angle = float(file.readline().strip())
         mew = float(file.readline().strip())
         end_time = float(file.readline().strip())
+
     # Initialise pygame
     pg.init()
     ANGLE = angle
@@ -48,6 +51,8 @@ def run_bons_sim():
             self.draw_options = pymunk.pygame_util.DrawOptions(self.screen)
             self.running = True
             self.paused = False
+            self.start_time = pg.time.get_ticks() / 1000  # Get start time in seconds
+            self.max_sim_time = end_time  # Maximum simulation time
 
             # Moved the block creation outside the while loop to avoid creating a new block every frame
             self.block_body = pymunk.Body(mass=user_mass, moment=7)
@@ -57,6 +62,7 @@ def run_bons_sim():
             space.add(self.block_body, self.block, slope_segment)
 
         def run(self):
+            clock = pg.time.Clock()  # Create a pygame clock
             while self.running:
                 for event in pg.event.get():
                     if event.type == pg.QUIT:
@@ -74,9 +80,16 @@ def run_bons_sim():
                 self.screen.fill((220, 220, 220))
                 space.debug_draw(self.draw_options)
 
+                # Check elapsed time and exit simulation if necessary
+                current_time = pg.time.get_ticks() / 1000  # Get current time in seconds
+                elapsed_time = current_time - self.start_time
+                if elapsed_time >= self.max_sim_time:
+                    self.running = False
+
                 pg.display.update()
 
             # Removed space.remove as it's not necessary, the space will be cleared when the program exits
             pg.quit()
+            bons_graphs_or_exit()
 
     Sim().run()

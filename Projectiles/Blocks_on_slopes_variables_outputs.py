@@ -19,6 +19,10 @@ def run_bons_outputs():
             self.vel_label = tk.Label(root, text="", font=("Helvetica", 14))
             self.vel_label.pack(pady=10)
 
+            # Create a button to close the GUI
+            self.close_button = tk.Button(root, text="Close", command=self.close_gui)
+            self.close_button.pack(pady=10)
+
             # Call the update_label method every 1000 milliseconds (1 second)
             self.root.after(10, self.update_label)
 
@@ -37,7 +41,13 @@ def run_bons_outputs():
             self.current_index = self.current_index + 1
 
             # Call the update_label method again after 1000 milliseconds (1 second)
-            self.root.after(10, self.update_label)
+            if self.current_index < len(self.time_list) and self.current_index < len(self.vel_list):
+                self.root.after(10, self.update_label)
+            else:
+                pass
+
+        def close_gui(self):
+            self.root.destroy()
 
 
     def calc_v_over_time(angle, mew, end_time):
