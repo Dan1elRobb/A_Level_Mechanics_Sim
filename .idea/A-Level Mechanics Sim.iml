@@ -7,4 +7,8 @@
     <orderEntry type="jdk" jdkName="Python 3.6 (A_Level_Mechanics_Sim)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PyDocumentationSettings">
+    <option name="format" value="NUMPY" />
+    <option name="myDocStringFormat" value="NumPy" />
+  </component>
 </module>

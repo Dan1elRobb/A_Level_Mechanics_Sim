@@ -16,14 +16,15 @@ def run_bons_sim():
 
     # Initialise pygame
     pg.init()
+
     ANGLE = angle
     user_mass = mass
     user_mew = mew
 
     # Calculate the width based on the angle for a more appropriate window size
-    SLOPE_WIDTH = 1280  # Set the initial window width
+    SLOPE_WIDTH = 600  # Set the initial window width
     SLOPE_HEIGHT = SLOPE_WIDTH * math.tan(math.radians(ANGLE))  # Calculate the slope height
-    MAX_WINDOW_HEIGHT = 1000  # Set a maximum window height
+    MAX_WINDOW_HEIGHT = 700  # Set a maximum window height
     WINDOW_HEIGHT = min(int(SLOPE_HEIGHT) + 100, MAX_WINDOW_HEIGHT)  # Adjusted window height
     WINDOW_SIZE = (SLOPE_WIDTH, WINDOW_HEIGHT)  # Adjusted window size
 
@@ -45,7 +46,16 @@ def run_bons_sim():
     slope_segment.friction = user_mew
 
     class Sim:
+        '''
+        This class is responsible for the blocks on slopes simulation
+        '''
         def __init__(self):
+            """
+            Returns
+            -------
+            object
+
+            """
             pg.init()
             self.screen = pg.display.set_mode(WINDOW_SIZE)
             self.draw_options = pymunk.pygame_util.DrawOptions(self.screen)
@@ -62,6 +72,14 @@ def run_bons_sim():
             space.add(self.block_body, self.block, slope_segment)
 
         def run(self):
+            """
+            The method of the simulation class which handles the 'game' loop of pygame and pymunk integrated
+            together. It is called only once when the simulation begins as the while loop is inside of the run
+            method
+            Returns
+            -------
+            object
+            """
             clock = pg.time.Clock()  # Create a pygame clock
             while self.running:
                 for event in pg.event.get():
@@ -87,9 +105,9 @@ def run_bons_sim():
                     self.running = False
 
                 pg.display.update()
-
-            # Removed space.remove as it's not necessary, the space will be cleared when the program exits
+            # Exit pygame (close the simulation display)
             pg.quit()
+            # Execute the module imported at the top that brings up the next pop up for user
             bons_graphs_or_exit()
 
     Sim().run()

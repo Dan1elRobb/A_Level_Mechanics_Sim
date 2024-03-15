@@ -1,17 +1,28 @@
+'''
+This module is used to simulate the collision question type with only one particle and a wall
+it involves the use of the graphs_or_exit_cwp module in order to seamlessly bring in the next GUI
+for the user without delay
+
+'''
 import pymunk
 import pymunk.pygame_util
 import pygame as pg
 from graphs_or_exit_cwp import cwp_graphs_or_exit
 
 def run_collissions_wall_sim():
-    # Initialize Pygame
+    """
+    This function allows this simulation module to be run by the main program
+    Returns
+    -------
+
+    """
     with open('CWPVars.txt', "r") as file:
         # Read each line and assign values to variables
         user_mass_particle = float(file.readline().strip())
         user_vel_particle = float(file.readline().strip())
         user_coefficient_of_restitution = float(file.readline().strip())
         user_end_time = float(file.readline().strip())
-
+    # Initialize Pygame
     pg.init()
 
     # Constants
@@ -23,12 +34,24 @@ def run_collissions_wall_sim():
 
     # Pymunk setup
     space = pymunk.Space()
-    space.gravity = 0, 0  # No gravity
+    space.gravity = 0, 0  # No gravity (2d collision)
     draw_options = pymunk.pygame_util.DrawOptions(screen)
 
 
     class Particle:
-        def __init__(self, mass, radius, position, velocity, color):
+        def __init__(self, mass, radius, position, velocity, colour):
+            """
+            Define the parameters for a general particle that the user can pick the mass and velocity of
+            Allow for further customisation by defining colour and radius  of the particle though not allowing
+            user to change them currently
+            Parameters
+            ----------
+            mass
+            radius
+            position
+            velocity
+            colour
+            """
             moment = pymunk.moment_for_circle(mass, 0, radius)
             self.body = pymunk.Body(mass, moment)
             self.body.position = position
@@ -36,16 +59,29 @@ def run_collissions_wall_sim():
             self.shape.elasticity = 1.0  # Initial coefficient of restitution
             self.shape.friction = 0.5
             self.body.velocity = velocity
-            self.shape.color = color
+            self.shape.colour = colour
             space.add(self.body, self.shape)
 
         def set_vel(self, x, y):
+            """
+            Allows the program to edit the velocity of the particle using a method of the object
+            Parameters
+            ----------
+            x
+            y
+            """
             self.body.velocity = (x, y)
 
         def unpause(self, velocity):
             self.body.velocity = velocity
 
         def get_velocity(self):
+            """
+            Allows the program to get the velocity of the particle using a method of the object
+            Returns
+            -------
+            Velocity of the particle
+            """
             return self.body.velocity
 
 
@@ -67,7 +103,7 @@ def run_collissions_wall_sim():
 
     # Create particle with a variable mass and initial velocity
     particle = Particle(mass=user_mass_particle, radius=10, position=(350, 150), velocity=(user_vel_particle, 0),
-                        color=(255, 0, 0))
+                        colour=(255, 0, 0))
 
     # Create a wall (static segment) at the right side of the window
     wall_body = pymunk.Body(body_type=pymunk.Body.STATIC)
@@ -110,14 +146,14 @@ def run_collissions_wall_sim():
 
         # Draw the simulation
         screen.fill((255, 255, 255))
-
-        if current_time - last_record_time >= 10:  # 100 milliseconds (0.1 second)
+        # Record the velocity of the particle every 0.01 seconds (for the sake of graphs and outputs)
+        if current_time - last_record_time >= 10:  # 10 milliseconds (0.01 second)
             velocities_particle.append(particle.get_velocity())
             last_record_time = current_time
         # Manually draw Pymunk shapes
         for shape in space.shapes:
             if isinstance(shape, pymunk.shapes.Circle):
-                pg.draw.circle(screen, shape.color,
+                pg.draw.circle(screen, shape.colour,
                                (round(shape.body.position.x), round(WINDOW_SIZE[1] - shape.body.position.y)),
                                int(shape.radius))
             elif isinstance(shape, pymunk.shapes.Segment):

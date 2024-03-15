@@ -111,7 +111,7 @@ def run_proj_sim():
     space.add(floor_segment)
 
     # Simulation setup
-    projectile = Projectile(mass, angle, start_height, initial_velocity)
+    projectile = Projectile(mass, angle, start_height+10, initial_velocity)
 
     running = True
     paused = False

@@ -31,7 +31,11 @@ def ctp_graphs():
         lin = f.readlines()
     for l in lin:
         particle2_vel_list.append(float(l.strip()))
-
+    # Find lowest and highest values in both velocities lists - for the sake of graphs showing correct ranges
+    min_particle1_vels = min(particle1_vel_list)
+    max_particle1_vels = max(particle1_vel_list)
+    min_particle2_vels = min(particle2_vel_list)
+    max_particle2_vels = max(particle2_vel_list)
     class GraphsApp(tk.Tk):
         def __init__(self):
             super().__init__()
@@ -49,10 +53,10 @@ def ctp_graphs():
         def create_graph(self):
             fig = plt.figure(figsize=(20, 30))
             ax = plt.axes()
-            ax.plot(times_list[:len(particle1_vel_list)], particle1_vel_list, label="Particle 1")
-            ax.plot(times_list[:len(particle2_vel_list)], particle2_vel_list, label="Particle 2")
+            ax.plot(times_list[:min(len(particle1_vel_list),len(particle2_vel_list))], particle1_vel_list[:min(len(particle1_vel_list),len(particle2_vel_list))], label="Particle 1")
+            ax.plot(times_list[:min(len(particle1_vel_list),len(particle2_vel_list))], particle2_vel_list[:min(len(particle1_vel_list),len(particle2_vel_list))], label="Particle 2")
             plt.xlim(0, user_end_time+5)
-            plt.ylim(min(particle2_vel_list) - 10, max(particle2_vel_list) + 10)
+            plt.ylim(min(min_particle1_vels,min_particle2_vels) - 10, max(max_particle1_vels,max_particle2_vels) + 10)
             ax.axhline()
             ax.axvline()
             plt.legend()
@@ -61,6 +65,6 @@ def ctp_graphs():
             plt.xlabel('Time')
             plt.ylabel('Velocity')
             canvas.get_tk_widget().pack()
-
+    print(len (times_list),len(particle1_vel_list),len(particle2_vel_list))
     app = GraphsApp()
     app.mainloop()

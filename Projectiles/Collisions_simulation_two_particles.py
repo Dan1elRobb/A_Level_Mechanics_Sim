@@ -1,10 +1,16 @@
+'''
+This module is used to simulate the collision between 2 particles question type
+Also makes use of the graphs_or_exit_ctp module to seamlessly transition to next GUI when the
+simulation ends
+'''
+
 import pymunk
 import pymunk.pygame_util
 import pygame as pg
 from graphs_or_exit_ctp import ctp_graphs_or_exit
 
 def run_collision_two_particles():
-    # Initialize Pygame
+    # Open and read the text file storing the values for the question type entered by the user
     with open('CTPVars.txt', "r") as file:
         # Read each line and assign values to variables
         user_mass_particle_one = float(file.readline().strip())
@@ -14,10 +20,11 @@ def run_collision_two_particles():
         user_coefficient_of_restitution = float(file.readline().strip())
         user_end_time = float(file.readline().strip())
 
+    # Initialize Pygame
     pg.init()
 
     # Constants
-    WINDOW_SIZE = (800, 600)
+    WINDOW_SIZE = (400, 300)
 
     # Pygame setup
     screen = pg.display.set_mode(WINDOW_SIZE)
@@ -29,7 +36,18 @@ def run_collision_two_particles():
     draw_options = pymunk.pygame_util.DrawOptions(screen)
 
     class Particle:
-        def __init__(self, mass, radius, position, velocity, color):
+        def __init__(self, mass, radius, position, velocity, colour):
+            """
+            Define the mass and velocity of both the particles, also add customisation for colour
+            and radius so we can tell te 2 particles apart later on
+            Parameters
+            ----------
+            mass
+            radius
+            position
+            velocity
+            colour
+            """
             moment = pymunk.moment_for_circle(mass, 0, radius)
             self.body = pymunk.Body(mass, moment)
             self.body.position = position
@@ -37,20 +55,37 @@ def run_collision_two_particles():
             self.shape.elasticity = 1.0  # Initial coefficient of restitution
             self.shape.friction = 0.5
             self.body.velocity = velocity
-            self.shape.color = color
+            self.shape.colour = colour
             space.add(self.body, self.shape)
 
-        def set_vels(self, x, y):
-            self.body.velocity = (x, y)
-
         def get_state(self):
+            """
+            Allows the program to get both the velocity and position of the particle using a method
+            of the object
+            Returns
+            -------
+
+            """
             return self.body.position, self.body.velocity
 
         def set_state(self, position, velocity):
+            """
+            Allows the program to set both the posistion and velocity of the particle in 1 method
+            Parameters
+            ----------
+            position
+            velocity
+            """
             self.body.position = position
             self.body.velocity = velocity
 
         def get_velocity(self):
+            """
+            Allows the program get the velocity of the particle in one output
+            Returns
+            -------
+
+            """
             return self.body.velocity
 
     # Collision handler for detecting collisions between particles
@@ -75,10 +110,10 @@ def run_collision_two_particles():
         return True
 
     # Create particles with variable masses and initial velocities
-    particle1 = Particle(mass=user_mass_particle_one, radius=20, position=(200, 300),
-                         velocity=(user_vel_particle_one, 0), color=(255, 0, 0))
-    particle2 = Particle(mass=user_mass_particle_two, radius=15, position=(600, 300),
-                         velocity=(-user_vel_particle_two, 0), color=(0, 0, 255))
+    particle1 = Particle(mass=user_mass_particle_one, radius=10, position=(100,150),
+                         velocity=(user_vel_particle_one, 0), colour=(255, 0, 0))
+    particle2 = Particle(mass=user_mass_particle_two, radius=5, position=(150, 150),
+                         velocity=(-user_vel_particle_two, 0), colour=(0, 0, 255))
 
     # Add collision handler for particles
     handler = space.add_collision_handler(0, 0)  # Collides with itself
@@ -87,6 +122,7 @@ def run_collision_two_particles():
     running = True
     paused = False
     end_time = pg.time.get_ticks() + int(user_end_time * 1000)  # Convert seconds to milliseconds
+    # Define the lists that will store the velocities of the particles over time
     velocities_particle1 = []
     velocities_particle2 = []
     last_record_time = pg.time.get_ticks()
@@ -127,12 +163,13 @@ def run_collision_two_particles():
             # Manually draw Pymunk shapes
             for shape in space.shapes:
                 if isinstance(shape, pymunk.shapes.Circle):
-                    pg.draw.circle(screen, shape.color,
+                    pg.draw.circle(screen, shape.colour,
                                    (round(shape.body.position.x), round(WINDOW_SIZE[1] - shape.body.position.y)),
                                    int(shape.radius))
 
             # Update the Pygame display
             pg.display.flip()
+    # Write the velocities of the particles to 2 seperate text files
     with open('CTP1_vels.txt','w') as f:
         for vel in velocities_particle1:
             f.write(str(vel[0])+'\n')
