@@ -1,10 +1,18 @@
+"""
+This module handles the creation and display of the projectiles' simulation. Uses the imported pymunk and pygame
+ modules to create the particle and handle its' physics.
+"""
 import pymunk
 import pymunk.pygame_util
 import pygame as pg
 import math
 from graphs_or_rerun_sim_projectiles import graphs_or_rerun
-from Projectile_Variables_Outputs import run_proj_outputs
+
+
 def run_proj_sim():
+    """
+    This function allows this simulation module to be run by the main program
+    """
     # Initialize Pygame
     pg.init()
     with open('PVars.txt', "r") as file:
@@ -20,42 +28,15 @@ def run_proj_sim():
     start_height = user_starting_height
     initial_velocity = user_initial_vel  # Adjust the initial speed as needed
 
-
-    def calc_variables_over_time(angle, end_time, initial_vel, initial_height):
-        t = 0
-        time_list = []
-        y_dis_list = []
-        x_dis_list = []
-        y_vel_list = []
-        while t < end_time:
-            y_s = initial_vel * math.sin(math.radians(angle)) * t - 4.9 * t ** 2 + initial_height
-            x_s = initial_vel * math.cos(math.radians(angle)) * t
-            y_vel = initial_vel * math.sin(math.radians(angle)) - 9.8 * t
-            y_dis_list.append(abs(y_s))
-            x_dis_list.append(x_s)
-            y_vel_list.append(y_vel)
-            time_list.append(t)
-            t += 0.01
-        return time_list, y_dis_list, x_dis_list, y_vel_list
-
-
-    def find_index_of_second_zero_displacement_using25(dis_list):
-        a = [i for i, n in enumerate(dis_list) if n < 25]
-        return a[1]
-
-    def find_index_of_second_zero_displacement_using10(dis_list):
-        a = [i for i, n in enumerate(dis_list) if n < 15]
-        return a[1]
-
-    # Constants
+    # Constants, adjust window height based on intitial velocity of the particle
     if user_initial_vel <= 40:
-        WINDOW_SIZE = (400,75)
-    elif user_initial_vel >40 and user_initial_vel <= 100:
-        WINDOW_SIZE = (1000,300)
+        WINDOW_SIZE = (400, 75)
+    elif user_initial_vel > 40 and user_initial_vel <= 100:
+        WINDOW_SIZE = (1000, 300)
     elif user_initial_vel > 100 and user_initial_vel <= 200:
-        WINDOW_SIZE = (1200,500)
+        WINDOW_SIZE = (1200, 500)
     elif user_initial_vel > 200:
-        WINDOW_SIZE = (1200,700)
+        WINDOW_SIZE = (1200, 700)
     GRAVITY = 9.8  # Real-world gravity in meters per second squared
 
     # Pygame setup
@@ -66,7 +47,6 @@ def run_proj_sim():
     space = pymunk.Space()
     space.gravity = 0, -GRAVITY  # Gravity points downwards
     draw_options = pymunk.pygame_util.DrawOptions(screen)
-
 
     class Projectile:
         def __init__(self, mass, angle, start_height, initial_velocity):
@@ -96,22 +76,22 @@ def run_proj_sim():
 
         def draw(self):
             # Draw the projectile with inverted y-coordinate
-            pg.draw.circle(screen, (255, 0, 0), (int(self.body.position.x), int(WINDOW_SIZE[1] - self.body.position.y)), 5)
+            pg.draw.circle(screen, (255, 0, 0), (int(self.body.position.x), int(WINDOW_SIZE[1] - self.body.position.y)),
+                           2)
 
             # Draw dotted line
             for i in range(1, len(self.previous_positions), 10):  # Increased the step to make the line more dotted
                 pg.draw.line(screen, (0, 0, 0), self.previous_positions[i - 1], self.previous_positions[i], 2)
 
-
     # Add a static floor
     floor_static = space.static_body
-    floor_segment = pymunk.Segment(floor_static, (0, 10), (WINDOW_SIZE[0]+10, 10), 4)
+    floor_segment = pymunk.Segment(floor_static, (0, 10), (WINDOW_SIZE[0] + 10, 10), 1)
     floor_segment.elasticity = 0.8
     floor_segment.friction = 0.5
     space.add(floor_segment)
 
     # Simulation setup
-    projectile = Projectile(mass, angle, start_height+10, initial_velocity)
+    projectile = Projectile(mass, angle, start_height + 10, initial_velocity)
 
     running = True
     paused = False
@@ -171,4 +151,3 @@ def run_proj_sim():
         pg.display.flip()
     pg.quit()
     graphs_or_rerun()
-

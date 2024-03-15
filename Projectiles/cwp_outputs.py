@@ -31,6 +31,15 @@ def run_cwp_outputs():
         be reused in the same instance of the progam, and it will start from the beginning of the lists when run each time
         """
         def __init__(self, root, particle_vel_list, time_list):
+            """
+            Define the root of the tkinter window and the lists of the velocities and times
+            that are going to be displayed
+            Parameters
+            ----------
+            root
+            particle_vel_list
+            time_list
+            """
             self.root = root
             self.root.title("Collisions particle and wall outputs")
             self.root.geometry("500x400")
@@ -49,11 +58,15 @@ def run_cwp_outputs():
             self.close_button = tk.Button(root, text="Close", command=self.close_gui)
             self.close_button.pack(pady=10)
 
-            # Call the update_label method every 1000 milliseconds (1 second)
+            # Call the update_label method every 10 milliseconds (0.01 seconds)
             self.root.after(10, self.update_label)
 
 
         def update_label(self):
+            """
+            Update the displayed label on the output GUI with the next item in the list, keeping track
+            of this using an index counter
+            """
             # Get the current value from the list
             current_particle_vel = self.particle_vel_list[self.current_index]
             current_time = self.time_list[self.current_index]
@@ -76,13 +89,19 @@ def run_cwp_outputs():
                 pass
 
         def close_gui(self):
+            """
+            The functino for the 'Close' button which destroys the root of the window
+            """
             self.root.destroy()
+
     with open('CWPVars.txt', "r") as file:
         # Read each line and assign values to variables
         user_mass_particle = float(file.readline().strip())
         user_vel_particle = float(file.readline().strip())
         user_coefficient_of_restitution = float(file.readline().strip())
         user_end_time = float(file.readline().strip())
+
+    # Generate lists of times and velocities by reading the files for velocities
     times_list = []
     ct = 0
     particle_vel_list = []
@@ -94,6 +113,8 @@ def run_cwp_outputs():
         lines = f.readlines()
     for l in lines:
         particle_vel_list.append(float(l.strip()))
+
+    # Instasiate root and app nad run the main loop of the root
     root = tk.Tk()
     app = Projectiles_Variable_Outputs_GUI(root, particle_vel_list,times_list)
     root.mainloop()

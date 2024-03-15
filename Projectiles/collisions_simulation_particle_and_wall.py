@@ -9,12 +9,10 @@ import pymunk.pygame_util
 import pygame as pg
 from graphs_or_exit_cwp import cwp_graphs_or_exit
 
+
 def run_collissions_wall_sim():
     """
     This function allows this simulation module to be run by the main program
-    Returns
-    -------
-
     """
     with open('CWPVars.txt', "r") as file:
         # Read each line and assign values to variables
@@ -36,7 +34,6 @@ def run_collissions_wall_sim():
     space = pymunk.Space()
     space.gravity = 0, 0  # No gravity (2d collision)
     draw_options = pymunk.pygame_util.DrawOptions(screen)
-
 
     class Particle:
         def __init__(self, mass, radius, position, velocity, colour):
@@ -84,7 +81,6 @@ def run_collissions_wall_sim():
             """
             return self.body.velocity
 
-
     # Collision handler for detecting collisions with the wall
     def wall_collision_handler(arbiter, space, data):
         # Set a specific coefficient of restitution for the collision with the wall
@@ -99,7 +95,6 @@ def run_collissions_wall_sim():
         arbiter.shapes[0].body.velocity = v_after
 
         return True
-
 
     # Create particle with a variable mass and initial velocity
     particle = Particle(mass=user_mass_particle, radius=10, position=(350, 150), velocity=(user_vel_particle, 0),
@@ -134,7 +129,6 @@ def run_collissions_wall_sim():
                         saved_velocity = particle.body.velocity
                         particle.set_vel(0, 0)
 
-
         current_time = pg.time.get_ticks()
         if current_time > end_time:
             running = False
@@ -162,9 +156,8 @@ def run_collissions_wall_sim():
 
         # Update the Pygame display
         pg.display.flip()
-    with open('CWP_vels.txt','w') as f:
+    with open('CWP_vels.txt', 'w') as f:
         for velocity in velocities_particle:
             f.write(str(velocity[0]) + '\n')
     pg.quit()
     cwp_graphs_or_exit()
-

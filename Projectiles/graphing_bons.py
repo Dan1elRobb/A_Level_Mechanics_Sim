@@ -1,9 +1,18 @@
+"""
+This module is used to display the graphs associated with the Blocks on slopes question type
+"""
+
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import tkinter as tk
 import math
+
+
 def bons_graphs():
+    """
+    This function is used so the graphs module can be run from another module with ease
+    """
     matplotlib.use('TkAgg')
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
@@ -13,7 +22,21 @@ def bons_graphs():
         angle = float(file.readline().strip())
         mew = float(file.readline().strip())
         end_time = float(file.readline().strip())
+
     def calc_v_over_time(angle, mew, end_time):
+        """
+        This function takes in the users inputted values and calculates a list of velocities for the blocks
+        also generates a list of times at 0.01s intervals
+        Parameters
+        ----------
+        angle
+        mew
+        end_time
+
+        Returns
+        -------
+        List of lists - [vel_list,time_list]
+        """
         t = 0
         time_list = []
         vel_list = []
@@ -23,12 +46,15 @@ def bons_graphs():
             time_list.append(t)
             t += 0.01
         return vel_list, time_list
-
+    # Generate the veloctiy and time lists using the above function
     vel_list = calc_v_over_time(math.radians(angle), mew, end_time)[0]
     time_list = calc_v_over_time(math.radians(angle), mew, end_time)[1]
 
-
     class GraphsApp(tk.Tk):
+        """
+        This class is responsible for the main window of the graphs display - all graphs that will be displayed
+        (currently only one) can be stuck on to this window
+        """
         def __init__(self):
             super().__init__()
             self.title('Blocks on slopes graphs')
@@ -38,12 +64,27 @@ def bons_graphs():
             y_vel_graph_page.pack(padx=10)
 
     class VelocityTimeGraphFrame(tk.Frame):
+        """
+        This class is responsible for the creation of the frame which will display the velocity vs time
+        graph and be stuck onto the main application
+        """
 
         def __init__(self, master, title):
+            """
+            Constructor of the class which defines the master of the frame and the title for the graph
+            Parameters
+            ----------
+            master
+            title
+            """
             super().__init__(master)
             self.title = title
             self.create_graph()
+
         def create_graph(self):
+            """
+            This method uses the matplotlib library to create the graphs based on lists of variable generated
+            """
             fig = plt.figure(figsize=(20, 30))
             ax = plt.axes()
             ax.plot(time_list, vel_list)
@@ -58,6 +99,6 @@ def bons_graphs():
 
             canvas.get_tk_widget().pack()
 
-
+    # Instantiate the app and run it
     app = GraphsApp()
     app.mainloop()
