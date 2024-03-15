@@ -1,3 +1,7 @@
+"""
+This module is used to create the GUI that asks the user if they want to start the simulation
+"""
+
 from blocks_on_slopes_simulation import run_bons_sim
 import tkinter as tk
 from tkinter import messagebox

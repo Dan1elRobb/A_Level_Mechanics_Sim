@@ -5,13 +5,13 @@ are selected by the user
 """
 
 import tkinter as tk
-from run_projectiles_sim_or_cancel import run_sim_or_cancel
 from tkinter import ttk
-from run_collisions_two_particles_sim_or_cancel import run_particle_collision_sim_or_cancel
-from run_collisions_partcle_and_wall_or_cancel import run_wall_collision_sim_or_cancel
-from run_blocks_on_slopes_or_cancel import run_bons_sim_or_cancel
 import sys
 from tkinter import messagebox
+from Projectiles_simulation import run_proj_sim
+from Collisions_simulation_two_particles import run_collision_two_particles
+from collisions_simulation_particle_and_wall import run_collissions_wall_sim
+from blocks_on_slopes_simulation import run_bons_sim
 
 
 class WelcomeScreen(tk.Frame):
@@ -314,7 +314,8 @@ class ProjInputWindow(tk.Frame):
     def ok_button_click(self):
         """
         This function will write the inputted user variables to the 'PVars.txt' text file but before doing so will
-         validate all the inputted variables to ensure no errors occur in simulation
+         validate all the inputted variables to ensure no errors occur in simulation. And opens the simulation window if
+         all are valid
         """
         # Get the values from entry widgets and store in a list
         variables_list = [
@@ -346,7 +347,7 @@ class ProjInputWindow(tk.Frame):
                 # Iterate over the values and write each one to a new line in the file
                 for value in variables_list:
                     file.write(str(value) + "\n")
-            run_sim_or_cancel()
+            run_proj_sim()
         else:
             self.switch_frame_callback(ProjectilesInvalidVariables)
 
@@ -430,7 +431,8 @@ class CollisionsTwoParticlesInputs(tk.Frame):
     def ok_button_click(self):
         """
         This function will write the inputted user variables to the 'CTPVars.txt' text file but before doing so will
-         validate all the inputted variables to ensure no errors occur in simulation
+         validate all the inputted variables to ensure no errors occur in simulation. And opens the simulation window if
+         all are valid
         """
         # Get the values from entry widgets and store in a list
         variables_list = [
@@ -461,7 +463,7 @@ class CollisionsTwoParticlesInputs(tk.Frame):
                 for value in variables_list:
                     file.write(str(value) + "\n")
 
-            run_particle_collision_sim_or_cancel()
+            run_collision_two_particles()
         else:
             self.switch_frame_callback(CTPInvalidVariables)
 
@@ -536,7 +538,8 @@ class CollisionsParticleAndWallInputs(tk.Frame):
     def ok_button_click(self):
         """
         This function will write the inputted user variables to the 'CWPVars.txt' text file but before doing so will
-         validate all the inputted variables to ensure no errors occur in simulation
+         validate all the inputted variables to ensure no errors occur in simulation. And opens the simulation window if
+         all are valid
         """
         # Get the values from entry widgets and store in a list
         variables_list = [
@@ -562,7 +565,7 @@ class CollisionsParticleAndWallInputs(tk.Frame):
                 # Iterate over the values and write each one to a new line in the file
                 for value in variables_list:
                     file.write(str(value) + "\n")
-            run_wall_collision_sim_or_cancel()
+            run_collissions_wall_sim()
         else:
             self.switch_frame_callback(CWPInvalidVariables)
 
@@ -637,7 +640,8 @@ class BlocksOnSlopesInputs(tk.Frame):
     def ok_button_click(self):
         """
         This function will write the inputted user variables to the 'BOSvars.txt' text file but before doing so will
-         validate all the inputted variables to ensure no errors occur in simulation
+         validate all the inputted variables to ensure no errors occur in simulation. And opens the simulation window if
+         all are valid
         """
         # Get the values from entry widgets and store in a list
         variables_list = [
@@ -665,7 +669,7 @@ class BlocksOnSlopesInputs(tk.Frame):
                 # Iterate over the values and write each one to a new line in the file
                 for value in variables_list:
                     file.write(str(value) + "\n")
-            run_bons_sim_or_cancel()
+            run_bons_sim()
         else:
             self.switch_frame_callback(BOSInvalidVariables)
 

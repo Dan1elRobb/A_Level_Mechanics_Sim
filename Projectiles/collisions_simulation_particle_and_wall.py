@@ -36,6 +36,24 @@ def run_collissions_wall_sim():
     draw_options = pymunk.pygame_util.DrawOptions(screen)
 
     class Particle:
+        """
+        This class is used to define a particle that is used in the collisions particle and wall question type
+
+        Attributes
+        ----------
+        mass - the mass of the particle
+        radius - the radius of the particle
+        velocity - the velocity of the particle
+        position - the position of the particle
+        colour - colour of the particle
+
+        Methods
+        -------
+        set_vel - sets the x and y velocity of the particle
+        unpause - 'unpauses' the simulation by setting the x and y velocities to what they were pre pause
+        get_velocity - returns the velocity of the particle
+
+        """
         def __init__(self, mass, radius, position, velocity, colour):
             """
             Define the parameters for a general particle that the user can pick the mass and velocity of

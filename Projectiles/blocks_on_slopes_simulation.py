@@ -1,10 +1,9 @@
-'''This is a module which conducts the blocks on slopes simulation '''
-# Conduct imports - making use of the bons_exit_graphs module created earlier
 import pymunk
 import pymunk.pygame_util
 import pygame as pg
 import math
 from bons_exit_graphs import bons_graphs_or_exit
+
 def run_bons_sim():
     # Open and read the text file in which the variables which the user inputted are stored and assign each a variable
     with open('BOSVars.txt', "r") as file:
@@ -64,11 +63,14 @@ def run_bons_sim():
             self.start_time = pg.time.get_ticks() / 1000  # Get start time in seconds
             self.max_sim_time = end_time  # Maximum simulation time
 
+            # Calculate moment of inertia based on block's mass and size
+            moment = pymunk.moment_for_box(user_mass, (50, 50))
+
             # Moved the block creation outside the while loop to avoid creating a new block every frame
-            self.block_body = pymunk.Body(mass=user_mass, moment=7)
+            self.block_body = pymunk.Body(mass=user_mass, moment=moment)
             self.block_body.position = SLOPE_WIDTH - 10, WINDOW_HEIGHT - SLOPE_HEIGHT
             self.block = pymunk.Poly.create_box(self.block_body, (50, 50))
-            self.block.friction = 1
+            self.block.friction = user_mew
             space.add(self.block_body, self.block, slope_segment)
 
         def run(self):
@@ -111,3 +113,5 @@ def run_bons_sim():
             bons_graphs_or_exit()
 
     Sim().run()
+
+

@@ -28,7 +28,7 @@ def run_proj_sim():
     start_height = user_starting_height
     initial_velocity = user_initial_vel  # Adjust the initial speed as needed
 
-    # Constants, adjust window height based on intitial velocity of the particle
+    # Constants, adjust window height based on initial velocity of the particle
     if user_initial_vel <= 40:
         WINDOW_SIZE = (400, 75)
     elif user_initial_vel > 40 and user_initial_vel <= 100:
@@ -49,7 +49,33 @@ def run_proj_sim():
     draw_options = pymunk.pygame_util.DrawOptions(screen)
 
     class Projectile:
+        """
+        This class is used to define the projectile that is used in the projectiles question type
+
+        Attributes
+        ----------
+        mass - the mass of the projectile
+        angle - the angle of projection of the projectile
+        initial_velocity - the initial velocity of the projectile
+        start_height - the starting height of projection of the projectile
+
+        Methods
+        -------
+        update - updates the position of the particle using the underlying physics module - pymunk
+        draw - draws the particle to the screen at the correct position
+
+        """
         def __init__(self, mass, angle, start_height, initial_velocity):
+            """
+            Define the parameters for a general projectile that the user can pick the mass,velocity and starting height
+            of
+            Parameters
+            ----------
+            mass
+            angle
+            initial_velocity
+            start_height
+            """
             moment = pymunk.moment_for_circle(mass, 0, 5)
             self.body = pymunk.Body(mass, moment)
             self.body.position = 10, start_height
@@ -67,6 +93,13 @@ def run_proj_sim():
             self.previous_positions = []
 
         def update(self, dt):
+            """
+            This method is used to progress the space of the physics simulation by a time period determined
+            by the frames in the main loop
+            Parameters
+            ----------
+            dt
+            """
             # Update the physics simulation
             if not paused:
                 space.step(dt)
@@ -75,6 +108,9 @@ def run_proj_sim():
                 self.previous_positions.append((self.body.position.x, WINDOW_SIZE[1] - self.body.position.y))
 
         def draw(self):
+            """
+            This method is used to draw the projectile to the screen at each loop of the game loop at correct positions
+            """
             # Draw the projectile with inverted y-coordinate
             pg.draw.circle(screen, (255, 0, 0), (int(self.body.position.x), int(WINDOW_SIZE[1] - self.body.position.y)),
                            2)

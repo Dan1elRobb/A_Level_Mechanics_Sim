@@ -36,10 +36,28 @@ def run_collision_two_particles():
     draw_options = pymunk.pygame_util.DrawOptions(screen)
 
     class Particle:
+        """
+        This class is used to define a particle that is used in the collisions 2 particles question type
+
+        Attributes
+        ----------
+        mass - the mass of the particle
+        radius - the radius of the particle
+        velocity - the velocity of the particle
+        position - the position of the particle
+        colour - colour of the particle
+
+        Methods
+        -------
+        set_state - sets the x and y velocity of the particle and x and y position of the particle
+        get_state - 'unpauses' the simulation by setting the x and y velocities and positions to what they were pre pause
+        get_velocity - returns the velocity of the particle
+
+        """
         def __init__(self, mass, radius, position, velocity, colour):
             """
             Define the mass and velocity of both the particles, also add customisation for colour
-            and radius so we can tell te 2 particles apart later on
+            and radius so that we can tell the 2 particles apart later on
             Parameters
             ----------
             mass
