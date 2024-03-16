@@ -6,7 +6,7 @@ import pymunk
 import pymunk.pygame_util
 import pygame as pg
 import math
-from graphs_or_rerun_sim_projectiles import graphs_or_rerun
+from graphs_or_exit_projectiles import graphs_or_rerun
 
 
 def run_proj_sim():

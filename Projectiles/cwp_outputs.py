@@ -8,7 +8,7 @@ import tkinter as tk
 
 
 def run_cwp_outputs():
-    class Projectiles_Variable_Outputs_GUI:
+    class Collisions_Variable_Outputs_GUI:
         """
         This class is used for the actual display of the outputs of the collision with particle and
         wall question type. It takes in 2 lists and will loop through these lists displaying each item
@@ -116,7 +116,7 @@ def run_cwp_outputs():
 
     # Instasiate root and app nad run the main loop of the root
     root = tk.Tk()
-    app = Projectiles_Variable_Outputs_GUI(root, particle_vel_list,times_list)
+    app = Collisions_Variable_Outputs_GUI(root, particle_vel_list,times_list)
     root.mainloop()
 
 

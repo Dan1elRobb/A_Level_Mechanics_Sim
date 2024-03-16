@@ -128,9 +128,9 @@ def run_collision_two_particles():
         return True
 
     # Create particles with variable masses and initial velocities
-    particle1 = Particle(mass=user_mass_particle_one, radius=10, position=(100,150),
+    particle1 = Particle(mass=user_mass_particle_one, radius=10, position=(175,150),
                          velocity=(user_vel_particle_one, 0), colour=(255, 0, 0))
-    particle2 = Particle(mass=user_mass_particle_two, radius=5, position=(150, 150),
+    particle2 = Particle(mass=user_mass_particle_two, radius=5, position=(225, 150),
                          velocity=(-user_vel_particle_two, 0), colour=(0, 0, 255))
 
     # Add collision handler for particles

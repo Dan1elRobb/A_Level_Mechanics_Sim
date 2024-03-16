@@ -51,9 +51,15 @@ def ctp_graphs_or_exit():
             outputs_button = tk.Button(self, text='Show Variables Over Time', command=self.start_outputs)
             outputs_button.pack(pady=20)
 
-            # Button to exit the application
-            exit_button = tk.Button(self, text="Exit", command=self.exit_application)
+            # Button to just exit this window
+            exit_button = tk.Button(self, text="Close", command=self.master.destroy)
             exit_button.pack(pady=20)
+
+            # Button to exit the application
+            exit_app_button = tk.Button(self, text="Exit Application", command=self.exit_application)
+            exit_app_button.pack(pady=20)
+
+
 
         @staticmethod
         def produce_graphs():
@@ -77,6 +83,7 @@ def ctp_graphs_or_exit():
             This method opens the outputs module for the Collisions Two Particles question type
             """
             run_ctp_outputs()
+
 
     # Use only one instance of Tk
     root = tk.Tk()

@@ -109,7 +109,7 @@ def run_bons_sim():
                 pg.display.update()
             # Exit pygame (close the simulation display)
             pg.quit()
-            # Execute the module imported at the top that brings up the next pop up for user
+            # Execute the module imported at the top that brings up the next appear for user
             bons_graphs_or_exit()
 
     Sim().run()

@@ -3,7 +3,7 @@ This is the main file for the mechanics simulator that will be run first it hand
 and validation for inputs and will call the 'run sim or cancel' modules when particular question types
 are selected by the user
 """
-
+import tkinter
 import tkinter as tk
 from tkinter import ttk
 import sys
@@ -305,6 +305,11 @@ class ProjInputWindow(tk.Frame):
         self.end_time_entry = tk.Entry(self, textvariable=self.end_time_var)
         self.end_time_entry.grid(row=4, column=1, padx=10, pady=5)
 
+        tk.Label(self, text='In this simulation the window height is displayed in the centre of the screen on the '
+                            'black line in the centre (that value is in m)').grid(
+            row=1, column=10)
+
+
         # OK button
         ttk.Button(self, text="OK", command=self.ok_button_click).grid(row=5, column=0, columnspan=2, pady=10)
 
@@ -318,28 +323,46 @@ class ProjInputWindow(tk.Frame):
          all are valid
         """
         # Get the values from entry widgets and store in a list
-        variables_list = [
-            self.angle_var.get(),
-            self.mass_var.get(),
-            self.initial_velocity_var.get(),
-            self.starting_height_var.get(),
-            self.end_time_var.get()
-        ]
+        try:
+            variables_list = [
+                self.angle_var.get(),
+                self.mass_var.get(),
+                self.initial_velocity_var.get(),
+                self.starting_height_var.get(),
+                self.end_time_var.get()
+            ]
+        except tkinter.TclError:
+            pass
         # Validation of inputted variables
         global projectiles_mass_valid
         global projectiles_initial_vel_valid
         global projectiles_angle_valid
         global projectiles_end_time_valid
         global projectiles_starting_height_valid
-        if int(self.angle_var.get()) <= 0:
+        try:
+            if int(self.angle_var.get()) <= 0 or int(self.angle_var.get()) > 90:
+                projectiles_angle_valid = False
+        except tkinter.TclError:
             projectiles_angle_valid = False
-        if int(self.mass_var.get()) <= 0:
+        try:
+            if int(self.mass_var.get()) <= 0:
+                projectiles_mass_valid = False
+        except tkinter.TclError:
             projectiles_mass_valid = False
-        if int(self.initial_velocity_var.get()) <= 0:
+        try:
+            if int(self.initial_velocity_var.get()) <= 0:
+                projectiles_initial_vel_valid = False
+        except tkinter.TclError:
             projectiles_initial_vel_valid = False
-        if int(self.starting_height_var.get()) < 0:
+        try:
+            if int(self.starting_height_var.get()) < 0:
+                projectiles_starting_height_valid = False
+        except tkinter.TclError:
             projectiles_starting_height_valid = False
-        if int(self.end_time_var.get()) <= 0:
+        try:
+            if int(self.end_time_var.get()) <= 0:
+                projectiles_end_time_valid = False
+        except tkinter.TclError:
             projectiles_end_time_valid = False
 
         if projectiles_angle_valid and projectiles_mass_valid and projectiles_initial_vel_valid and projectiles_end_time_valid and projectiles_starting_height_valid:
@@ -421,6 +444,9 @@ class CollisionsTwoParticlesInputs(tk.Frame):
         self.end_time_entry = tk.Entry(self, textvariable=self.end_time_var)
         self.end_time_entry.grid(row=5, column=1, padx=10, pady=5)
 
+        tk.Label(self, text='In this simulation the window is 400m by 300m and the particles will spawn in 50m from '
+                            'each-other in the centre of the screen \n Positive velocity is taken to be to the right').grid(row=1, column=10)
+
         # OK button
         ttk.Button(self, text="OK", command=self.ok_button_click).grid(row=6, column=0, columnspan=2, pady=10)
 
@@ -435,29 +461,54 @@ class CollisionsTwoParticlesInputs(tk.Frame):
          all are valid
         """
         # Get the values from entry widgets and store in a list
-        variables_list = [
-            self.mass_particle1_var.get(),
-            self.mass_particle2_var.get(),
-            self.velocity_particle1_var.get(),
-            self.velocity_particle2_var.get(),
-            self.coefficient_of_restitution_var.get(),
-            self.end_time_var.get()
-        ]
+        try:
+            variables_list = [
+                self.mass_particle1_var.get(),
+                self.mass_particle2_var.get(),
+                self.velocity_particle1_var.get(),
+                self.velocity_particle2_var.get(),
+                self.coefficient_of_restitution_var.get(),
+                self.end_time_var.get()
+            ]
+        except tkinter.TclError:
+            pass
         # Validation for user inputted variables
         global ctp_mass1_valid
         global ctp_mass2_valid
         global ctp_coefficient_of_restitution_valid
         global ctp_end_time_valid
-        if self.mass_particle1_var.get() <= 0:
+        global ctp_vel1_valid
+        global ctp_vel2_valid
+        try:
+            if self.mass_particle1_var.get() <= 0:
+                ctp_mass1_valid = False
+        except tkinter.TclError:
             ctp_mass1_valid = False
-        if self.mass_particle2_var.get() <= 0:
+        try:
+            if self.mass_particle2_var.get() <= 0:
+                ctp_mass2_valid = False
+        except tkinter.TclError:
             ctp_mass2_valid = False
-        if self.coefficient_of_restitution_var.get() > 1 or self.coefficient_of_restitution_var.get() < 0:
+        try:
+            if self.coefficient_of_restitution_var.get() > 1 or self.coefficient_of_restitution_var.get() < 0:
+                ctp_coefficient_of_restitution_valid = False
+        except tkinter.TclError:
             ctp_coefficient_of_restitution_valid = False
-        if self.end_time_var.get() <= 0:
+        try:
+            if int(self.end_time_var.get()) <= 0:
+                ctp_end_time_valid = False
+        except tkinter.TclError:
             ctp_end_time_valid = False
+        try:
+            b = self.velocity_particle1_var.get()
+        except tkinter.TclError:
+            ctp_vel1_valid = False
+        try:
+            b = self.velocity_particle2_var.get()
+        except tkinter.TclError:
+            ctp_vel2_valid = False
         # Only write to text file if variables are valid
-        if ctp_mass1_valid and ctp_mass2_valid and ctp_coefficient_of_restitution_valid and ctp_end_time_valid:
+        if ctp_mass1_valid and ctp_mass2_valid and ctp_coefficient_of_restitution_valid and ctp_end_time_valid and ctp_vel1_valid and ctp_vel2_valid:
             with open('CTPVars.txt', "w") as file:
                 # Iterate over the values and write each one to a new line in the file
                 for value in variables_list:
@@ -528,6 +579,10 @@ class CollisionsParticleAndWallInputs(tk.Frame):
         self.end_time_entry = tk.Entry(self, textvariable=self.end_time_var)
         self.end_time_entry.grid(row=3, column=1, padx=10, pady=5)
 
+        tk.Label(self, text='In this simulation the window is 400m by 300m and the particle will spawn in 50m from '
+                            'the wall \n Positive velocity is taken to be to the right').grid(
+            row=1, column=10)
+
         # OK button
         ttk.Button(self, text="OK", command=self.ok_button_click).grid(row=6, column=0, columnspan=2, pady=10)
 
@@ -542,25 +597,44 @@ class CollisionsParticleAndWallInputs(tk.Frame):
          all are valid
         """
         # Get the values from entry widgets and store in a list
-        variables_list = [
-            self.mass_particle_var.get(),
-            self.velocity_particle_var.get(),
-            self.coefficient_of_restitution_var.get(),
-            self.end_time_var.get()
-        ]
+        try:
+            variables_list = [
+                self.mass_particle_var.get(),
+                self.velocity_particle_var.get(),
+                self.coefficient_of_restitution_var.get(),
+                self.end_time_var.get()
+            ]
+        except tkinter.TclError:
+            pass
         # Validation of user inputted variables
         global cwp_mass_valid
         global cwp_end_time_valid
         global cwp_coefficient_of_restitution_valid
-        if self.mass_particle_var.get() <= 0:
+        global cwp_vel_valid
+        try:
+            if self.mass_particle_var.get() <= 0:
+                cwp_mass_valid = False
+        except tkinter.TclError:
             cwp_mass_valid = False
-        if self.coefficient_of_restitution_var.get() > 1 or self.coefficient_of_restitution_var.get() < 0:
+        try:
+            if self.coefficient_of_restitution_var.get() > 1 or self.coefficient_of_restitution_var.get() < 0:
+                cwp_coefficient_of_restitution_valid = False
+        except tkinter.TclError:
             cwp_coefficient_of_restitution_valid = False
-        if self.end_time_var.get() <= 0:
+        try:
+            if int(self.end_time_var.get()) <= 0:
+                cwp_end_time_valid = False
+        except tkinter.TclError:
             cwp_end_time_valid = False
 
+        try:
+            a = self.velocity_particle_var.get()
+        except tkinter.TclError:
+            cwp_vel_valid = False
+
+
         # Only write values if they are all valid
-        if cwp_coefficient_of_restitution_valid and cwp_end_time_valid and cwp_mass_valid:
+        if cwp_coefficient_of_restitution_valid and cwp_end_time_valid and cwp_mass_valid and cwp_vel_valid:
             with open('CWPVars.txt', "w") as file:
                 # Iterate over the values and write each one to a new line in the file
                 for value in variables_list:
@@ -644,25 +718,41 @@ class BlocksOnSlopesInputs(tk.Frame):
          all are valid
         """
         # Get the values from entry widgets and store in a list
-        variables_list = [
-            self.mass_particle_var.get(),
-            self.angle_var.get(),
-            self.coefficient_of_friction_var.get(),
-            self.end_time_var.get()
-        ]
+        try:
+
+            variables_list = [
+                self.mass_particle_var.get(),
+                self.angle_var.get(),
+                self.coefficient_of_friction_var.get(),
+                self.end_time_var.get()
+            ]
+        except tk.TclError:
+            pass
         # Validation of user inputted variables
         global bos_mass_valid
         global bos_angle_valid
         global bos_mew_valid
         global bos_end_time_valid
-        if self.mass_particle_var.get() <= 0:
+        try:
+            if self.mass_particle_var.get() <= 0:
+                bos_mass_valid = False
+        except tkinter.TclError:
             bos_mass_valid = False
-        if self.angle_var.get() <= 0:
-            bos_angle_valid = False
-        if self.coefficient_of_friction_var.get() < 0 or self.coefficient_of_friction_var.get() > 1:
+        try:
+            if self.coefficient_of_friction_var.get() > 1 or self.coefficient_of_friction_var.get() < 0:
+                bos_mew_valid = False
+        except tkinter.TclError:
             bos_mew_valid = False
-        if self.end_time_var.get() <= 0:
+        try:
+            if int(self.end_time_var.get()) <= 0:
+                bos_end_time_valid = False
+        except tkinter.TclError:
             bos_end_time_valid = False
+        try:
+            if int(self.angle_var.get()) <= 0 or int(self.angle_var.get()) > 90:
+                bos_angle_valid = False
+        except tkinter.TclError:
+            bos_angle_valid = False
         # Only write to file if all variables are valid
         if bos_mass_valid and bos_angle_valid and bos_mew_valid and bos_end_time_valid:
             with open('BOSVars.txt', "w") as file:
@@ -812,6 +902,8 @@ class ProjectilesInvalidVariables(tk.Frame):
 # Define validity for variables globally so can be transferred between classes easily
 ctp_mass1_valid = True
 ctp_mass2_valid = True
+ctp_vel1_valid = True
+ctp_vel2_valid = True
 ctp_coefficient_of_restitution_valid = True
 ctp_end_time_valid = True
 
@@ -839,6 +931,10 @@ class CTPInvalidVariables(tk.Frame):
      the user re-inputs a valid variable the program has no issue
     reset_end_time_validity - resets the global ctp_end_time_valid variable so when the user re-inputs a valid
      variable the program has no issue
+    reset_vel1_validity - resets the global ctp_vel1_valid variable so when the user re-inputs a valid
+     variable the program has no issue
+    reset_vel2_validity - resets the global ctp_vel1_valid variable so when the user re-inputs a valid
+     variable the program has no issue
     All 'reset validity' methods are static
     """
 
@@ -860,6 +956,8 @@ class CTPInvalidVariables(tk.Frame):
         coefficient_of_restitution_invalid_label = ttk.Label(self, text='Entered Coefficient Of Restitution Is Invalid',
                                                              font=('Calibri', 10))
         end_time_invalid_label = ttk.Label(self, text='Entered End Time Is Invalid', font=('Calibri', 10))
+        vel1_invalid_label = ttk.Label(self, text='Entered Velocity For Particle 1 Is Invalid', font=('Calibri', 10))
+        vel2_invalid_label = ttk.Label(self, text='Entered Velocity For Particle 2 Is Invalid', font=('Calibri', 10))
         if not ctp_mass1_valid:
             mass1_invalid_label.pack()
             self.reset_mass1_validity()
@@ -872,6 +970,12 @@ class CTPInvalidVariables(tk.Frame):
         if not ctp_end_time_valid:
             end_time_invalid_label.pack()
             self.reset_end_time_validity()
+        if not ctp_vel1_valid:
+            vel1_invalid_label.pack()
+            self.reset_vel1_validity()
+        if not ctp_vel2_valid:
+            vel2_invalid_label.pack()
+            self.reset_vel2_validity()
         button_frame = ttk.Frame(self, padding=10)
         button_frame.pack()
 
@@ -918,11 +1022,22 @@ class CTPInvalidVariables(tk.Frame):
         global ctp_coefficient_of_restitution_valid
         ctp_coefficient_of_restitution_valid = True
 
+    @staticmethod
+    def reset_vel1_validity():
+        global ctp_vel1_valid
+        ctp_vel1_valid = True
+
+    @staticmethod
+    def reset_vel2_validity():
+        global ctp_vel2_valid
+        ctp_vel2_valid = True
+
 
 # Define validity for variables globally so can be transferred between classes easily
 cwp_mass_valid = True
 cwp_coefficient_of_restitution_valid = True
 cwp_end_time_valid = True
+cwp_vel_valid = True
 
 
 class CWPInvalidVariables(tk.Frame):
@@ -945,6 +1060,8 @@ class CWPInvalidVariables(tk.Frame):
          when the user re-inputs a valid variable the program has no issue
         reset_end_time_validity - resets the global cwp_end_time_valid variable so when the user re-inputs a valid
          variable the program has no issue
+        reset_vel_validity - resets the global cwp_vel_valid variable so when the user re-inputs a valid
+         variable the program has no issue
         All 'reset validity' methods are static
         """
 
@@ -965,6 +1082,7 @@ class CWPInvalidVariables(tk.Frame):
         coefficient_of_restitution_invalid_label = ttk.Label(self, text='Entered Coefficient Of Restitution Is Invalid',
                                                              font=('Calibri', 10))
         end_time_invalid_label = ttk.Label(self, text='Entered End Time Is Invalid', font=('Calibri', 10))
+        vel_invalid_label = ttk.Label(self, text='Entered Velocity For Particle Is Invalid', font=('Calibri', 10))
         # Only pack variables if they are valid
         if not cwp_mass_valid:
             mass_invalid_label.pack()
@@ -975,6 +1093,9 @@ class CWPInvalidVariables(tk.Frame):
         if not cwp_end_time_valid:
             end_time_invalid_label.pack()
             self.reset_end_time_validity()
+        if not cwp_vel_valid:
+            vel_invalid_label.pack()
+            self.reset_vel_validity()
 
         # Back button
         button_frame = ttk.Frame(self, padding=10)
@@ -1014,6 +1135,10 @@ class CWPInvalidVariables(tk.Frame):
         """
         global cwp_coefficient_of_restitution_valid
         cwp_coefficient_of_restitution_valid = True
+    @staticmethod
+    def reset_vel_validity():
+        global cwp_vel_valid
+        cwp_vel_valid = True
 
 
 # Define validity for variables globally so can be transferred between classes easily
@@ -1125,7 +1250,7 @@ class MainApplication(tk.Tk):
     """
     def __init__(self):
         super().__init__()
-        self.title("Dans Mechanics Sim")
+        self.title("Mechanics Sim")
         self.geometry("1000x300")
 
         self.current_frame = None

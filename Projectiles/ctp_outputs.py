@@ -10,7 +10,7 @@ def run_ctp_outputs():
     """
     This function allows the functionality of this module to be used by other modules when needed
     """
-    class Projectiles_Variable_Outputs_GUI:
+    class Collisions_Variable_Outputs_GUI:
         """
         This class is used for the actual display of the outputs of the collision with 2 particles question type.
         It takes in 2 lists and will loop through these lists displaying each item inside the lists at 0.01s intervals
@@ -123,7 +123,7 @@ def run_ctp_outputs():
         particle2_vel_list.append(float(l.strip()))
     # Run the GUI
     root = tk.Tk()
-    app = Projectiles_Variable_Outputs_GUI(root, particle1_vel_list, times_list, particle2_vel_list)
+    app = Collisions_Variable_Outputs_GUI(root, particle1_vel_list, times_list, particle2_vel_list)
     root.mainloop()
 
 
