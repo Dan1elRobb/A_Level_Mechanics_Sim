@@ -310,7 +310,7 @@ class ProjInputWindow(tk.Frame):
             row=1, column=10)
 
 
-        # OK button
+        #OK button
         ttk.Button(self, text="OK", command=self.ok_button_click).grid(row=5, column=0, columnspan=2, pady=10)
 
         # Back button
@@ -445,7 +445,7 @@ class CollisionsTwoParticlesInputs(tk.Frame):
         self.end_time_entry.grid(row=5, column=1, padx=10, pady=5)
 
         tk.Label(self, text='In this simulation the window is 400m by 300m and the particles will spawn in 50m from '
-                            'each-other in the centre of the screen \n Positive velocity is taken to be to the right').grid(row=1, column=10)
+                            'each-other in the centre of the screen \n Positive velocity for particle 1 is taken to be to the right and to the left for particle 2').grid(row=1, column=10)
 
         # OK button
         ttk.Button(self, text="OK", command=self.ok_button_click).grid(row=6, column=0, columnspan=2, pady=10)

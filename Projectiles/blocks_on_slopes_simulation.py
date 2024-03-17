@@ -21,7 +21,7 @@ def run_bons_sim():
     user_mew = mew
 
     # Calculate the width based on the angle for a more appropriate window size
-    SLOPE_WIDTH = 600  # Set the initial window width
+    SLOPE_WIDTH = 1000  # Set the initial window width
     SLOPE_HEIGHT = SLOPE_WIDTH * math.tan(math.radians(ANGLE))  # Calculate the slope height
     MAX_WINDOW_HEIGHT = 700  # Set a maximum window height
     WINDOW_HEIGHT = min(int(SLOPE_HEIGHT) + 100, MAX_WINDOW_HEIGHT)  # Adjusted window height

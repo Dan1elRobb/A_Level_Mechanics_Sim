@@ -30,7 +30,7 @@ def run_proj_sim():
 
     # Constants, adjust window height based on initial velocity of the particle
     if user_initial_vel <= 40:
-        WINDOW_SIZE = (400, 75)
+        WINDOW_SIZE = (400, 100)
     elif user_initial_vel > 40 and user_initial_vel <= 100:
         WINDOW_SIZE = (1000, 300)
     elif user_initial_vel > 100 and user_initial_vel <= 200:
