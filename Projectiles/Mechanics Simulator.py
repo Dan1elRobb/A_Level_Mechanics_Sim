@@ -310,7 +310,7 @@ class ProjInputWindow(tk.Frame):
             row=1, column=10)
 
 
-        # OK butto
+        # OK button
         ttk.Button(self, text="OK", command=self.ok_button_click).grid(row=5, column=0, columnspan=2, pady=10)
 
         # Back button
