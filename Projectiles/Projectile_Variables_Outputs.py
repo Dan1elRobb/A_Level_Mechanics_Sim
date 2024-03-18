@@ -138,9 +138,9 @@ def run_proj_outputs():
         x_dis_list = []
         y_vel_list = []
         while t < end_time:
-            y_s = initial_vel * math.sin(angle) * t - 4.9 * t ** 2 + initial_height
-            x_s = initial_vel * math.cos(angle) * t
-            y_vel = initial_vel * math.sin(angle) - 9.8 * t
+            y_s = initial_vel * math.sin(math.radians(angle)) * t - 4.9 * t ** 2 + initial_height
+            x_s = initial_vel * math.cos(math.radians(angle)) * t
+            y_vel = initial_vel * math.sin(math.radians(angle)) - 9.8 * t
             y_dis_list.append(y_s)
             x_dis_list.append(x_s)
             y_vel_list.append(y_vel)

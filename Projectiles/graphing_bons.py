@@ -41,14 +41,14 @@ def bons_graphs():
         time_list = []
         vel_list = []
         while t < end_time:
-            v = 9.8 * t * (math.sin(angle) - math.cos(angle) * mew)
+            v = 9.8 * t * (math.sin(math.radians(angle)) - math.cos(math.radians(angle)) * mew)
             vel_list.append(v)
             time_list.append(t)
             t += 0.01
         return vel_list, time_list
     # Generate the veloctiy and time lists using the above function
-    vel_list = calc_v_over_time(math.radians(angle), mew, end_time)[0]
-    time_list = calc_v_over_time(math.radians(angle), mew, end_time)[1]
+    vel_list = calc_v_over_time(angle, mew, end_time)[0]
+    time_list = calc_v_over_time(angle, mew, end_time)[1]
 
     class GraphsApp(tk.Tk):
         """

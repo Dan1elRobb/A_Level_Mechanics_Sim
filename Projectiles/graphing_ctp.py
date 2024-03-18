@@ -81,10 +81,18 @@ def ctp_graphs():
             fig = plt.figure(figsize=(20, 30))
             ax = plt.axes()
             # Avoid indexing errors by truncating lists
-            ax.plot(times_list[:min(len(particle1_vel_list), len(particle2_vel_list))],
-                    particle1_vel_list[:min(len(particle1_vel_list), len(particle2_vel_list))], label="Particle 1")
-            ax.plot(times_list[:min(len(particle1_vel_list), len(particle2_vel_list))],
-                    particle2_vel_list[:min(len(particle1_vel_list), len(particle2_vel_list))], label="Particle 2")
+            try:
+                ax.plot(times_list[:min(len(particle1_vel_list)-5, len(particle2_vel_list)-5)],
+                        particle1_vel_list[:min(len(particle1_vel_list), len(particle2_vel_list))], label="Particle 1")
+                ax.plot(times_list[:min(len(particle1_vel_list)-5, len(particle2_vel_list)-5)],
+                        particle2_vel_list[:min(len(particle1_vel_list)-5, len(particle2_vel_list)-5)], label="Particle 2")
+            except ValueError:
+                ax.plot(times_list[:250],
+                        particle1_vel_list[:250], label="Particle 1")
+                ax.plot(times_list[:250],
+                        particle2_vel_list[:250],
+                        label="Particle 2")
+
             plt.xlim(0, user_end_time + 5)
             plt.ylim(min(min_particle1_vels, min_particle2_vels) - 10, max(max_particle1_vels, max_particle2_vels) + 10)
             ax.axhline()

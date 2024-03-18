@@ -106,8 +106,9 @@ def run_bons_outputs():
         t = 0
         time_list = []
         vel_list = []
+        acc = 9.8*math.sin(math.radians(angle)) - 9.8*math.cos(math.radians(angle))*mew
         while t < end_time:
-            v = 9.8 * t * (math.sin(angle) - math.cos(angle) * mew)
+            v = acc * t
             vel_list.append(v)
             time_list.append(t)
             t += 0.01
@@ -121,8 +122,8 @@ def run_bons_outputs():
         end_time = float(file.readline().strip())
 
     # Generate the velocity and time lists using the earlier function making sure to convert the user angle to radians
-    vel_list = calc_v_over_time(math.radians(angle), mew, end_time)[0]
-    time_list = calc_v_over_time(math.radians(angle), mew, end_time)[1]
+    vel_list = calc_v_over_time(angle, mew, end_time)[0]
+    time_list = calc_v_over_time(angle, mew, end_time)[1]
 
     # Establish a root for the GUI and generate an app with the inputs of the 2 lists just defined
     root = tk.Tk()
