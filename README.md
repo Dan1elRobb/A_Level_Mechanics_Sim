@@ -1,6 +1,11 @@
 # A_Level_Mechanics_Sim
-Run Mechanics simulator.py in the projectiles file
+Run Mechanics_simulator.py in the Mechanics_simulator file
 If unsure how to use click instructions button
+Select a question type
+Enter your variables
+Click OK
+Watch simulation
+Ask for graphs or outputs or neither or both
 Uses:
 PyMunk version: 6.6.0
 PyGame version: 2.5.2
