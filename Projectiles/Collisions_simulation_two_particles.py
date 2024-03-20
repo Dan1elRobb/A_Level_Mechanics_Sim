@@ -88,7 +88,7 @@ def run_collision_two_particles():
 
         def set_state(self, position, velocity):
             """
-            Allows the program to set both the posistion and velocity of the particle in 1 method
+            Allows the program to set both the position and velocity of the particle in 1 method
             Parameters
             ----------
             position

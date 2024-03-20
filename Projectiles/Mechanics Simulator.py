@@ -146,7 +146,7 @@ class HowToUse(tk.Frame):
         instructions_label = ttk.Label(self, text='Welcome to my mechanics simulator.\n To use select your desired '
                                                   'question type and enter the associated variables (End time means the'
                                                   ' duration of the simulation)\n Once satisfied with your variables '
-                                                  'simply press OK then the run sim button on the following window.\n '
+                                                  'simply press OK.\n '
                                                   'Press the spacebar to pause the simulation at any time.\n Once the '
                                                   'simulation has expired a pop up window will appear asking you if you'
                                                   ' would like to see graphs.\nSelect the Graphs button to get the '
@@ -306,7 +306,8 @@ class ProjInputWindow(tk.Frame):
         self.end_time_entry.grid(row=4, column=1, padx=10, pady=5)
 
         tk.Label(self, text='In this simulation the window height is displayed in the centre of the screen on the '
-                            'black line in the centre (that value is in m)').grid(
+                            'black line in the centre (that value is in m)\n After the first bounce the parabolic '
+                            'model breaks down so the graphs and variables will not make any sense').grid(
             row=1, column=10)
 
 

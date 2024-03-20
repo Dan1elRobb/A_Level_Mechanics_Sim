@@ -30,7 +30,7 @@ def cwp_graphs():
     with open('CWP_vels.txt', 'r') as f:
         lines = f.readlines()
     for l in lines:
-        if float(l) != 0:
+        if float(l) != 0:  # Remove velocities of 0 (when sim is paused)
             particle_vel_list.append(float(l.strip()))
 
     class GraphsApp(tk.Tk):

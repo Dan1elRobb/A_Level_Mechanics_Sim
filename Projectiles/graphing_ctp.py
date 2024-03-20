@@ -87,10 +87,10 @@ def ctp_graphs():
                 ax.plot(times_list[:min(len(particle1_vel_list)-5, len(particle2_vel_list)-5)],
                         particle2_vel_list[:min(len(particle1_vel_list)-5, len(particle2_vel_list)-5)], label="Particle 2")
             except ValueError:
-                ax.plot(times_list[:250],
-                        particle1_vel_list[:250], label="Particle 1")
-                ax.plot(times_list[:250],
-                        particle2_vel_list[:250],
+                ax.plot(times_list[:500],
+                        particle1_vel_list[:500], label="Particle 1")
+                ax.plot(times_list[:500],
+                        particle2_vel_list[:500],
                         label="Particle 2")
 
             plt.xlim(0, user_end_time + 5)
@@ -103,6 +103,6 @@ def ctp_graphs():
             plt.xlabel('Time')
             plt.ylabel('Velocity')
             canvas.get_tk_widget().pack()
-    # Instatiate the app and run the main loop
+    # Instantiate the app and run the main loop
     app = GraphsApp()
     app.mainloop()

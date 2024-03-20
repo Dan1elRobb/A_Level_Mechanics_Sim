@@ -6,10 +6,12 @@ to be opened by this one
 
 import tkinter as tk
 
+
 def run_ctp_outputs():
     """
     This function allows the functionality of this module to be used by other modules when needed
     """
+
     class Collisions_Variable_Outputs_GUI:
         """
         This class is used for the actual display of the outputs of the collision with 2 particles question type.
@@ -27,8 +29,9 @@ def run_ctp_outputs():
         update_label - The method which updates the text labels every 0.01s as long as the index pointer is in range
         of the length of the shortest list generated
         close_gui - The method which destroys the root and thus closes the GUI - designed to mean that this module can
-        be reused in the same instance of the progam, and it will start from the beginning of the lists when run each time
+        be reused in the same instance of the program, and it will start from the beginning of the lists when run each time
         """
+
         def __init__(self, root, particle1_vel_list, time_list, particle2_vel_list):
             """
             Define the root of the tkinter window and the lists of the velocities and times
@@ -61,7 +64,7 @@ def run_ctp_outputs():
             self.close_button = tk.Button(root, text="Close", command=self.close_gui)
             self.close_button.pack(pady=10)
 
-            # Call the update_label method every 1000 milliseconds (1 second)
+            # Call the update_label method every 10 milliseconds (0.01 seconds)
             self.root.after(10, self.update_label)
 
         def update_label(self):
@@ -86,7 +89,8 @@ def run_ctp_outputs():
             self.current_index = self.current_index + 1
 
             # Call the update_label method again after 10 milliseconds (0.01 seconds)
-            if self.current_index < len(self.time_list) and self.current_index < len(self.particle2_vel_list) and self.current_index < len(self.particle1_vel_list):
+            if self.current_index < len(self.time_list) and self.current_index < len(
+                    self.particle2_vel_list) and self.current_index < len(self.particle1_vel_list):
                 self.root.after(10, self.update_label)
             else:
                 pass
@@ -96,6 +100,7 @@ def run_ctp_outputs():
             Command function for the 'Close' button allowing the user to close the GUI
             """
             self.root.destroy()
+
     # Read the variables from the text file they are stored in for this particular question type and assign them
     # variables
 
@@ -125,5 +130,3 @@ def run_ctp_outputs():
     root = tk.Tk()
     app = Collisions_Variable_Outputs_GUI(root, particle1_vel_list, times_list, particle2_vel_list)
     root.mainloop()
-
-

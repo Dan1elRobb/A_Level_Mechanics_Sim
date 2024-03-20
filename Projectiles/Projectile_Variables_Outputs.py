@@ -67,12 +67,12 @@ def run_proj_outputs():
             self.close_button = tk.Button(root, text="Close", command=self.close_gui)
             self.close_button.pack(pady=10)
 
-            # Call the update_label method every 1000 milliseconds (1 second)
+            # Call the update_label method every 10 milliseconds (0.01 second)
             self.root.after(10, self.update_label)
 
         def update_label(self):
             """
-            This method updates the different variable labels at 0.1s intervals
+            This method updates the different variable labels at 0.01s intervals
             """
             # Get the current value from the list
             current_y_vel = self.y_vel_list[self.current_index]
@@ -84,7 +84,7 @@ def run_proj_outputs():
             y_vel_display = f' Y Velocity: {str(current_y_vel)[0:5]}'
             time_display = f'Time: {str(current_time)[0:4]}'
             x_dis_display = f'X Displacement: {str(current_x_dis)[0:6]}'
-            y_dis_display = f'Y Displacement: {str(current_y_dis)[0:6]}'
+            y_dis_display = f'Height: {str(current_y_dis)[0:6]}'
             self.y_vel_label.config(text=y_vel_display)
             self.time_label.config(text=time_display)
             self.x_dis_label.config(text=x_dis_display)

@@ -40,9 +40,11 @@ def bons_graphs():
         t = 0
         time_list = []
         vel_list = []
+        sin_angle = math.sin(math.radians(angle))
+        cos_angle = math.cos(math.radians(angle))
         while t < end_time:
-            v = 9.8 * t * (math.sin(math.radians(angle)) - math.cos(math.radians(angle)) * mew)
-            vel_list.append(v)
+            v = 9.8 * t * (sin_angle - (cos_angle * mew))
+            vel_list.append(abs(v))
             time_list.append(t)
             t += 0.01
         return vel_list, time_list

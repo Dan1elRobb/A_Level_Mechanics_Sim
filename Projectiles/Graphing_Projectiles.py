@@ -28,7 +28,7 @@ def projectiles_graphs():
 
         Returns
         -------
-        List of lists - [time_list, y_dis_list, x_dis_list, y_vel_list]
+        2d array - [time_list, y_dis_list, x_dis_list, y_vel_list]
         """
         t = 0
         time_list = []
@@ -57,7 +57,7 @@ def projectiles_graphs():
 
         Returns
         -------
-        a[1] - the index of the second value in the given list that is less than 10 (as the dis_list is
+        a[1] - the index of the second value in the given list that is less than 1 (as the dis_list is
          displacements over time at 0.01s intervals for larger initial velocities there may not be a
          displacement that is equal to 0 so having it return the second index under 10 will get the
          correct index for the graphs for both small and large initial velocities)

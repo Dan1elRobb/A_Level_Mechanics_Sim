@@ -28,8 +28,9 @@ def run_cwp_outputs():
         update_label - The method which updates the text labels every 0.01s as long as the index pointer is in range
         of the length of the shortest list generated
         close_gui - The method which destroys the root and thus closes the GUI - designed to mean that this module can
-        be reused in the same instance of the progam, and it will start from the beginning of the lists when run each time
+        be reused in the same instance of the program, and it will start from the beginning of the lists when run each time
         """
+
         def __init__(self, root, particle_vel_list, time_list):
             """
             Define the root of the tkinter window and the lists of the velocities and times
@@ -61,7 +62,6 @@ def run_cwp_outputs():
             # Call the update_label method every 10 milliseconds (0.01 seconds)
             self.root.after(10, self.update_label)
 
-
         def update_label(self):
             """
             Update the displayed label on the output GUI with the next item in the list, keeping track
@@ -70,7 +70,6 @@ def run_cwp_outputs():
             # Get the current value from the list
             current_particle_vel = self.particle_vel_list[self.current_index]
             current_time = self.time_list[self.current_index]
-
 
             # Update the label with the current value
             time_display = f'Time: {str(current_time)[0:4]}'
@@ -81,7 +80,7 @@ def run_cwp_outputs():
             # Move to the next value in the list
             self.current_index = self.current_index + 1
 
-            # Call the update_label method again after 1000 milliseconds (1 second)
+            # Call the update_label method again after 10 milliseconds (0.01 seconds)
             if self.current_index < len(self.time_list) and self.current_index < len(
                     self.particle_vel_list):
                 self.root.after(10, self.update_label)
@@ -114,10 +113,7 @@ def run_cwp_outputs():
     for l in lines:
         particle_vel_list.append(float(l.strip()))
 
-    # Instasiate root and app nad run the main loop of the root
+    # Instantiate root and app and run the main loop of the root
     root = tk.Tk()
-    app = Collisions_Variable_Outputs_GUI(root, particle_vel_list,times_list)
+    app = Collisions_Variable_Outputs_GUI(root, particle_vel_list, times_list)
     root.mainloop()
-
-
-

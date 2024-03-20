@@ -1,5 +1,5 @@
 """
-This module handles the GUI that appears after the Collisions particle and wall simulation and asks the user
+This module handles the GUI that appears after the collisions particle and wall simulation and asks the user
  if they would like to produce graphs or get the variable outputs over time or exit the application entirely
 """
 import tkinter as tk
@@ -14,7 +14,7 @@ def cwp_graphs_or_exit():
     This function allows this module to be run by other modules with ease
     """
 
-    class GraphsOrReRun(tk.Frame): # Change inheritance to tk.Frame
+    class GraphsOrReRun(tk.Frame):  # Change inheritance to tk.Frame
         """
         This class is responsible for the display of the GUI that allows user to pick between seeing the
          graphs associated with the selected question type or seeing the variables over time or exiting
@@ -27,6 +27,7 @@ def cwp_graphs_or_exit():
         exit_application - uses the sys.exit() function to kill the program entirely
         All methods other than create_widgets are static
         """
+
         def __init__(self, master=None):
             """
             The constructor for this class calls the create_widgets method and uses the super().init call to
@@ -56,7 +57,7 @@ def cwp_graphs_or_exit():
             exit_button.pack(pady=20)
 
             # Button to exit the application
-            exit_button = tk.Button(self, text="Exit", command=self.exit_application)
+            exit_button = tk.Button(self, text="Exit Application", command=self.exit_application)
             exit_button.pack(pady=20)
 
         @staticmethod

@@ -52,7 +52,7 @@ def graphs_or_rerun():
             exit_button.pack(pady=20)
 
             # Button to exit the application
-            exit_button = tk.Button(self, text="Exit", command=self.exit_application)
+            exit_button = tk.Button(self, text="Exit Application", command=self.exit_application)
             exit_button.pack(pady=20)
 
         @staticmethod
